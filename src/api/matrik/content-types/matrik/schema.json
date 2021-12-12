@@ -1,0 +1,160 @@
+{
+  "kind": "collectionType",
+  "collectionName": "matriks",
+  "info": {
+    "singularName": "matrik",
+    "pluralName": "matriks",
+    "displayName": "Matrik",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nama": {
+      "type": "string"
+    },
+    "nik": {
+      "type": "string"
+    },
+    "noKartuKeluarga": {
+      "type": "string"
+    },
+    "TempatLahir": {
+      "type": "string"
+    },
+    "jenisKelamin": {
+      "type": "enumeration",
+      "enum": [
+        "Laki-Laki",
+        "Perempuan"
+      ]
+    },
+    "tanggalLahir": {
+      "type": "date"
+    },
+    "statusKawin": {
+      "type": "enumeration",
+      "enum": [
+        "Belum Kawin",
+        "Kawin",
+        "Cerai Hidup",
+        "Cerai Mati"
+      ]
+    },
+    "agama": {
+      "type": "enumeration",
+      "enum": [
+        "Islam",
+        "Kristen",
+        "Katholik",
+        "Hindu",
+        "Budha",
+        "Konghuchu",
+        "Aliran Kepercayaan"
+      ]
+    },
+    "pendidikanTerakhir": {
+      "type": "enumeration",
+      "enum": [
+        "Tidak/Belum Sekolah",
+        "Belum Tamat SD/Sederajat",
+        "Tamat SD/Sederajat",
+        "SLTP/Sederajat",
+        "SLTA/Sederajat",
+        "Diploma I/II",
+        "Akademi/Diploma III/S. Muda",
+        "Akademi/Diploma III/Sarjana Muda",
+        "Diploma IV/Strata I",
+        "Strata II",
+        "Strata III"
+      ]
+    },
+    "alamat": {
+      "type": "string"
+    },
+    "rtRw": {
+      "type": "string"
+    },
+    "Kelurahan": {
+      "type": "string"
+    },
+    "kecamatan": {
+      "type": "string"
+    },
+    "kabupaten": {
+      "type": "string"
+    },
+    "propinsi": {
+      "type": "string"
+    },
+    "namaAyah": {
+      "type": "string"
+    },
+    "namaIbu": {
+      "type": "string"
+    },
+    "nikAyah": {
+      "type": "string"
+    },
+    "nikIbu": {
+      "type": "string"
+    },
+    "keluarga": {
+      "displayName": "AnggotaKeluarga",
+      "type": "component",
+      "repeatable": true,
+      "component": "itemized.anggota-keluarga"
+    },
+    "peran": {
+      "type": "richtext"
+    },
+    "bap": {
+      "type": "richtext"
+    },
+    "passport": {
+      "type": "richtext"
+    },
+    "pendanaan": {
+      "type": "richtext"
+    },
+    "pendanaanKeterangan": {
+      "type": "richtext"
+    },
+    "pendanaanDokumentasi": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "informasiTeknis": {
+      "type": "richtext"
+    },
+    "sosialMedia": {
+      "displayName": "itemSosmed",
+      "type": "component",
+      "repeatable": true,
+      "component": "itemized.item-sosmed"
+    },
+    "sosialMediaKeterangan": {
+      "type": "richtext"
+    },
+    "lapangan": {
+      "type": "richtext"
+    },
+    "lapanganKeterangan": {
+      "type": "richtext"
+    },
+    "lapanganDokumentasi": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "type": "media",
+      "multiple": true
+    }
+  }
+}

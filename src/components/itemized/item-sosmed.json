@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_itemized_item_sosmeds",
+  "info": {
+    "displayName": "itemSosmed",
+    "icon": "american-sign-language-interpreting"
+  },
+  "options": {},
+  "attributes": {
+    "tipe": {
+      "type": "enumeration",
+      "enum": [
+        "Getcontact",
+        "Truecaller",
+        "Callapps",
+        "Telegram",
+        "WhatsApp",
+        "Facebook",
+        "Website",
+        "Email",
+        "Lainnya"
+      ]
+    },
+    "value": {
+      "type": "string"
+    }
+  }
+}

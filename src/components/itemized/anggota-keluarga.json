@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_itemized_anggota_keluargas",
+  "info": {
+    "displayName": "AnggotaKeluarga",
+    "icon": "address-book"
+  },
+  "options": {},
+  "attributes": {
+    "nik": {
+      "type": "string"
+    },
+    "nama": {
+      "type": "string"
+    },
+    "nomor": {
+      "type": "string"
+    }
+  }
+}
