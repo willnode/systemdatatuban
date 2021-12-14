@@ -1,0 +1,1 @@
+require("@strapi/strapi/lib/commands/start")();
