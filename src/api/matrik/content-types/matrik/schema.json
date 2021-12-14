@@ -18,6 +18,15 @@
     "nik": {
       "type": "string"
     },
+    "pasFoto": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media"
+    },
+    "noHandphone": {
+      "type": "string"
+    },
     "noKartuKeluarga": {
       "type": "string"
     },
