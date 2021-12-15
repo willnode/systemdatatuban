@@ -80,6 +80,8 @@ $RECYCLE.BIN/
 ssl
 .idea
 nbproject
+public/matrik-files/*
+!public/matrik-files/.gitkeep
 public/uploads/*
 !public/uploads/.gitkeep
 

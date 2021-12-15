@@ -30,7 +30,7 @@
     "noKartuKeluarga": {
       "type": "string"
     },
-    "TempatLahir": {
+    "tempatLahir": {
       "type": "string"
     },
     "jenisKelamin": {
@@ -38,6 +38,104 @@
       "enum": [
         "Laki-Laki",
         "Perempuan"
+      ]
+    },
+    "jenisPekerjaan": {
+      "type": "enumeration",
+      "enum": [
+        "Belum/Tidak Bekerja",
+        "Mengurus Rumah Tangga",
+        "Pelajar/Mahasiswa",
+        "Pensiunan",
+        "Pegawai Negeri Sipil",
+        "Pegawai Negeri Sipil (PNS)",
+        "Tentara Nasional Indonesia",
+        "Tentara Nasional Indonesia (TNI)",
+        "Kepolisian RI",
+        "Kepolisian RI (POLRI)",
+        "Perdagangan",
+        "Petani/Pekebun",
+        "Peternak",
+        "Nelayan/Perikanan",
+        "Industri",
+        "Konstruksi",
+        "Transportasi",
+        "Karyawan Swasta",
+        "Karyawan Bumn",
+        "Karyawan Bumd",
+        "Karyawan Honorer",
+        "Buruh Harian Lepas",
+        "Buruh Tani/Perkebunan",
+        "Buruh Nelayan/Perikanan",
+        "Buruh Peternakan",
+        "Pembantu Rumah Tangga",
+        "Tukang Cukur",
+        "Tukang Listrik",
+        "Tukang Batu",
+        "Tukang Kayu",
+        "Tukang Sol Sepatu",
+        "Tukang Las/Pandai Besi",
+        "Tukang Jahit",
+        "Tukang Gigi",
+        "Penata Rias",
+        "Penata Busana",
+        "Penata Rambut",
+        "Mekanik",
+        "Seniman",
+        "Tabib",
+        "Paraji",
+        "Perancang Busana",
+        "Penterjemah",
+        "Imam Mesjid",
+        "Pendeta",
+        "Pastor",
+        "Wartawan",
+        "Ustadz/Mubaligh",
+        "Juru Masak",
+        "Promotor Acara",
+        "Anggota DPR-RI",
+        "Anggota DPD",
+        "Anggota BPK",
+        "Presiden",
+        "Wakil Presiden",
+        "Anggota Mahkamah Konstitusi",
+        "Anggota Kabinet/kementerian",
+        "Duta Besar",
+        "Gubernur",
+        "Wakil Gubernur",
+        "Bupati",
+        "Wakil Bupati",
+        "Walikota",
+        "Wakil Walikota",
+        "Anggota DPRD Provinsi",
+        "Anggota DPRD Kabupaten/Kota",
+        "Dosen",
+        "Guru",
+        "Pilot",
+        "Pengacara",
+        "Notaris",
+        "Arsitek",
+        "Akuntan",
+        "Konsultan",
+        "Dokter",
+        "Bidan",
+        "Perawat",
+        "Apoteker",
+        "Psikiater/Psikolog",
+        "Penyiar Televisi",
+        "Penyiar Radio",
+        "Pelaut",
+        "Peneliti",
+        "Sopir",
+        "Pialang",
+        "Paranormal",
+        "Pedagang",
+        "Perangkat Desa",
+        "Kepala Desa",
+        "Biarawati",
+        "Wiraswasta",
+        "Pekerjaan Lainnya",
+        "Lainnya"
       ]
     },
     "tanggalLahir": {
@@ -86,7 +184,7 @@
     "rtRw": {
       "type": "string"
     },
-    "Kelurahan": {
+    "kelurahan": {
       "type": "string"
     },
     "kecamatan": {
@@ -141,14 +239,23 @@
     "informasiTeknis": {
       "type": "richtext"
     },
-    "sosialMedia": {
+    "mediaSosial": {
       "displayName": "itemSosmed",
       "type": "component",
       "repeatable": true,
       "component": "itemized.item-sosmed"
     },
-    "sosialMediaKeterangan": {
+    "mediaSosialKeterangan": {
       "type": "richtext"
+    },
+    "mediaSosialDokumentasi": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "type": "media",
+      "multiple": true
     },
     "lapangan": {
       "type": "richtext"
