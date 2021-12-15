@@ -111,9 +111,9 @@ module.exports = {
               [{
                   text: "KELUARGA"
                 },
-                ["NIK", ...data.keluarga.map(x => x.nik || '')],
-                ["NAMA", ...data.keluarga.map(x => x.nama || '')],
-                ["NOMOR", ...data.keluarga.map(x => x.nomor || '')]
+                ["NIK", ...(data.keluarga || []).map(x => x.nik || '')],
+                ["NAMA", ...(data.keluarga || []).map(x => x.nama || '')],
+                ["NOMOR", ...(data.keluarga || []).map(x => x.nomor || '')]
               ],
               [{
                 text: "PERAN/KETERLIBATAN"
@@ -153,7 +153,7 @@ module.exports = {
                 margin: 10,
                 table: {
                   body: [
-                    ["DOKUMENTASI\n"], ...data.pendanaanDokumentasi.map(x => ([{
+                    ["DOKUMENTASI\n"], ...(data.pendanaanDokumentasi || []).map(x => ([{
                       ...image(x),
                     }]))
                   ]
@@ -179,7 +179,7 @@ module.exports = {
                     [{
                       colSpan: 3,
                       text: data.noHandphone || ''
-                    }, '', ''], ...data.mediaSosial.map(x => ([x.tipe || '', ':', x.value || '']))
+                    }, '', ''], ...(data.mediaSosial || []).map(x => ([x.tipe || '', ':', x.value || '']))
                   ]
                 },
                 layout: 'noBorders',
@@ -213,7 +213,7 @@ module.exports = {
                 margin: 10,
                 table: {
                   body: [
-                    ["DOKUMENTASI\n"], ...data.lapanganDokumentasi.map(x => ([{
+                    ["DOKUMENTASI\n"], ...(data.lapanganDokumentasi || []).map(x => ([{
                       ...image(x),
                     }]))
                   ]

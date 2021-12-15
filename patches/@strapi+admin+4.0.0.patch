@@ -1,6 +1,6 @@
 diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/EditView/PrintLink/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/EditView/PrintLink/index.js
 new file mode 100644
-index 0000000..7361f40
+index 0000000..4dbe6fc
 --- /dev/null
 +++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/EditView/PrintLink/index.js
 @@ -0,0 +1,35 @@
@@ -27,7 +27,7 @@ index 0000000..7361f40
 +  return (
 +    <>
 +      <Button onClick={clickPrint} size="S" startIcon={<File />} variant="primary-light">
-+        Print
++        Print PDF
 +      </Button>
 +    </>
 +  );
