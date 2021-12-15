@@ -7,7 +7,8 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "postinstall": "patch-package"
   },
   "devDependencies": {},
   "dependencies": {
@@ -16,6 +17,7 @@
     "@strapi/strapi": "4.0.0",
     "markdown-it": "^12.3.0",
     "mysql": "^2.18.1",
+    "patch-package": "^6.4.7",
     "pdfmake": "^0.2.4",
     "sqlite3": "5.0.2"
   },

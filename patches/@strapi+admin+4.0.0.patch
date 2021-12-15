@@ -1,0 +1,73 @@
+diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/EditView/PrintLink/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/EditView/PrintLink/index.js
+new file mode 100644
+index 0000000..7361f40
+--- /dev/null
++++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/EditView/PrintLink/index.js
+@@ -0,0 +1,35 @@
++import React, { memo, useState } from 'react';
++import { useIntl } from 'react-intl';
++import get from 'lodash/get';
++import isEqual from 'react-fast-compare';
++import { Button } from '@strapi/design-system/Button';
++import File from '@strapi/icons/File';
++import { ConfirmDialog, useNotification } from '@strapi/helper-plugin';
++import PropTypes from 'prop-types';
++import { getTrad } from '../../../utils';
++
++const PrintLink = ({ isCreatingEntry, id  }) => {
++
++  if (isCreatingEntry) {
++    return null;
++  }
++
++  const clickPrint = () => {
++      window.open(`/api/matriks/${id}/print`, '_blank');
++  };
++
++  return (
++    <>
++      <Button onClick={clickPrint} size="S" startIcon={<File />} variant="primary-light">
++        Print
++      </Button>
++    </>
++  );
++};
++
++PrintLink.propTypes = {
++  isCreatingEntry: PropTypes.bool.isRequired,
++  id: PropTypes.number.isRequired,
++};
++
++export default PrintLink;
+\ No newline at end of file
+diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/EditView/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/EditView/index.js
+index fb11464..764e2d4 100644
+--- a/node_modules/@strapi/admin/admin/src/content-manager/pages/EditView/index.js
++++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/EditView/index.js
+@@ -30,6 +30,7 @@ import Informations from './Informations';
+ import Header from './Header';
+ import { createAttributesLayout, getFieldsActionMatchingPermissions } from './utils';
+ import DeleteLink from './DeleteLink';
++import PrintLink from './PrintLink';
+ 
+ const cmPermissions = permissions.contentManager;
+ const ctbPermissions = [{ action: 'plugin::content-type-builder.read', subject: null }];
+@@ -309,6 +310,10 @@ const EditView = ({
+                       )}
+                       <Box as="aside" aria-labelledby="links">
+                         <Stack size={2}>
++                        <PrintLink
++                              isCreatingEntry={isCreatingEntry}
++                            id={id}
++                            />
+                           {slug !== 'strapi::administrator' && (
+                             <CheckPermissions permissions={ctbPermissions}>
+                               <LinkButton
+@@ -344,6 +349,7 @@ const EditView = ({
+                             </LinkButton>
+                           </CheckPermissions>
+                           <InjectionZone area="contentManager.editView.right-links" slug={slug} />
++
+                           {allowedActions.canDelete && (
+                             <DeleteLink
+                               isCreatingEntry={isCreatingEntry}
