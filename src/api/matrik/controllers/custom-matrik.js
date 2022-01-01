@@ -48,7 +48,7 @@ module.exports = {
     var dd = {
       pageSize: 'A4',
       content: [{
-          text: 'MATRIKS',
+          text: (data.kasus + "").toUpperCase(),
           style: 'header',
         },
         {
@@ -70,7 +70,7 @@ module.exports = {
                   margin: 5,
                   alignment: 'center'
                 }, {
-                  text: data.nama,
+                  text: data.namaAlias,
                   margin: 5,
                   alignment: 'center'
                 }, {
@@ -116,7 +116,7 @@ module.exports = {
                 ["NOMOR", ...(data.keluarga || []).map(x => x.nomor || '')]
               ],
               [{
-                text: "PERAN/KETERLIBATAN"
+                text: "PERAN / KETERLIBATAN"
               }, {
                 colSpan: 3,
                 text: data.peran || ''

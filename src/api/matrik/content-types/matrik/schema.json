@@ -12,7 +12,13 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "kasus": {
+      "type": "string"
+    },
     "nama": {
+      "type": "string"
+    },
+    "namaAlias": {
       "type": "string"
     },
     "nik": {
