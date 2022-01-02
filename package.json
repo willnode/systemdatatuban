@@ -8,13 +8,14 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package && node ./node_modules/full-icu/postinstall.js"
   },
   "devDependencies": {},
   "dependencies": {
     "@strapi/plugin-i18n": "4.0.0",
     "@strapi/plugin-users-permissions": "4.0.0",
     "@strapi/strapi": "4.0.0",
+    "full-icu": "^1.4.0",
     "markdown-it": "^12.3.0",
     "mysql": "^2.18.1",
     "patch-package": "^6.4.7",
