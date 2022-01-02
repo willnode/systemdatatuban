@@ -7,6 +7,18 @@ const fonts = {
   }
 }
 
+const formatTglID = (tgl) => new Date(tgl).toLocaleString('id-ID', {
+  timeZone: 'Asia/Jakarta',
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  timeZoneName: 'short',
+}).replace(/\./g, ':');
+
 module.exports = {
   async print(ctx) {
     const {
@@ -48,16 +60,17 @@ module.exports = {
     var dd = {
       pageSize: 'A4',
       content: [{
-          text: (data.kasus + "").toUpperCase(),
+          text: data.nik + "",
           style: 'header',
         },
         {
           table: {
-            widths: ['*', '*', '*', '*'],
+            widths: [100, 100, 150, 100],
             headerRows: 0,
             body: [
-              [
-                [{
+              [{
+                fillColor: 'green',
+                stack: [{
                   text: "IDENTITAS",
                   margin: 10,
                   alignment: 'center'
@@ -77,38 +90,40 @@ module.exports = {
                   text: data.noHandphone,
                   margin: 5,
                   alignment: 'center'
-                }, ], {
-                  colSpan: 3,
-                  table: {
-                    widths: ['auto', 'auto', '*'],
-                    headerRows: 0,
-                    body: [
-                      ['NAMA', ':', data.nama || ''],
-                      ['NIK', ':', data.nik || ''],
-                      ['NO. KARTU KELUARGA', ':', data.noKartuKeluarga || ''],
-                      ['TEMPAT LAHIR', ':', data.tempatLahir || ''],
-                      ['TANGGAL LAHIR', ':', data.tanggalLahir || ''],
-                      ['JENIS KELAMIN', ':', data.jenisKelamin || ''],
-                      ['JENIS PEKERJAAN', ':', data.jenisPekerjaan || ''],
-                      ['STATUS KAWIN', ':', data.statusKawin || ''],
-                      ['AGAMA', ':', data.agama || ''],
-                      ['PENDIDIKAN TERAKHIR', ':', data.pendidikanTerakhir || ''],
-                      ['ALAMAT', ':', data.alamat || ''],
-                      ['RT / RW	', ':', data.rtRw || ''],
-                      ['KELURAHAN', ':', data.kelurahan || ''],
-                      ['KECAMATAN', ':', data.kecamatan || ''],
-                      ['KABUPATEN', ':', data.kabupaten || ''],
-                      ['PROPINSI', ':', data.propinsi || ''],
-                      ['NAMA AYAH', ':', data.namaAyah || ''],
-                      ['NIK AYAH', ':', data.nikAyah || ''],
-                      ['NAMA IBU', ':', data.namaIbu || ''],
-                      ['NIK IBU', ':', data.nikIbu || ''],
-                    ]
-                  },
-                  layout: 'noBorders'
-                }, '', ''
-              ],
+                }, ]
+              }, {
+                colSpan: 3,
+                table: {
+                  widths: ['auto', 'auto', '*'],
+                  headerRows: 0,
+                  body: [
+                    ['KASUS', ':', data.kasus || ''],
+                    ['NAMA', ':', data.nama || ''],
+                    ['NIK', ':', data.nik || ''],
+                    ['NO. KARTU KELUARGA', ':', data.noKartuKeluarga || ''],
+                    ['TEMPAT LAHIR', ':', data.tempatLahir || ''],
+                    ['TANGGAL LAHIR', ':', data.tanggalLahir || ''],
+                    ['JENIS KELAMIN', ':', data.jenisKelamin || ''],
+                    ['JENIS PEKERJAAN', ':', data.jenisPekerjaan || ''],
+                    ['STATUS KAWIN', ':', data.statusKawin || ''],
+                    ['AGAMA', ':', data.agama || ''],
+                    ['PENDIDIKAN TERAKHIR', ':', data.pendidikanTerakhir || ''],
+                    ['ALAMAT', ':', data.alamat || ''],
+                    ['RT / RW	', ':', data.rtRw || ''],
+                    ['KELURAHAN', ':', data.kelurahan || ''],
+                    ['KECAMATAN', ':', data.kecamatan || ''],
+                    ['KABUPATEN', ':', data.kabupaten || ''],
+                    ['PROPINSI', ':', data.propinsi || ''],
+                    ['NAMA AYAH', ':', data.namaAyah || ''],
+                    ['NIK AYAH', ':', data.nikAyah || ''],
+                    ['NAMA IBU', ':', data.namaIbu || ''],
+                    ['NIK IBU', ':', data.nikIbu || ''],
+                  ]
+                },
+                layout: 'noBorders'
+              }, '', ''],
               [{
+                fillColor: 'green',
                   text: "KELUARGA"
                 },
                 ["NIK", ...(data.keluarga || []).map(x => x.nik || '')],
@@ -116,30 +131,35 @@ module.exports = {
                 ["NOMOR", ...(data.keluarga || []).map(x => x.nomor || '')]
               ],
               [{
+                fillColor: 'green',
                 text: "PERAN / KETERLIBATAN"
               }, {
                 colSpan: 3,
                 text: data.peran || ''
               }, '', ''],
               [{
+                fillColor: 'green',
                 text: "BAP"
               }, {
                 colSpan: 3,
                 text: data.bap || ''
               }, '', ''],
               [{
+                fillColor: 'green',
                 text: "INTEROGASI"
               }, {
                 colSpan: 3,
                 text: data.interogasi || ''
               }, '', ''],
               [{
+                fillColor: 'green',
                 text: "PASSPORT"
               }, {
                 colSpan: 3,
                 text: data.passport || ''
               }, '', ''],
               [{
+                fillColor: 'green',
                 rowSpan: 2,
                 text: "PENDANAAN"
               }, {
@@ -147,7 +167,7 @@ module.exports = {
                 text: data.pendanaan || ''
               }, '', ''],
               ['', {
-                text: data.pendanaanKeterangan || ''
+                text: "KETERANGAN\n" + (data.pendanaanKeterangan || '')
               }, {
                 colSpan: 2,
                 margin: 10,
@@ -162,12 +182,14 @@ module.exports = {
                 alignment: 'center'
               }, ''],
               [{
+                fillColor: 'green',
                 text: "IT"
               }, {
                 colSpan: 3,
                 text: data.passport || ''
               }, '', ''],
               [{
+                fillColor: 'green',
                 rowSpan: 2,
                 text: "MEDIA SOSIAL"
               }, {
@@ -185,7 +207,7 @@ module.exports = {
                 layout: 'noBorders',
               }, '', ''],
               ['', {
-                text: "KETERANGAN\n" + data.mediaSosialKeterangan || ''
+                text: "KETERANGAN\n" + (data.mediaSosialKeterangan || '')
               }, {
                 colSpan: 2,
                 margin: 10,
@@ -201,13 +223,14 @@ module.exports = {
               }, ''],
               [{
                 rowSpan: 2,
-                text: "LAPANGAN"
+                text: "LAPANGAN",
+                fillColor: 'green',
               }, {
                 colSpan: 3,
                 text: data.lapangan || ''
               }, '', ''],
               ['', {
-                text: "KETERANGAN\n" + data.lapanganKeterangan
+                text: "KETERANGAN\n" + (data.lapanganKeterangan || '')
               }, {
                 colSpan: 2,
                 margin: 10,
@@ -224,6 +247,17 @@ module.exports = {
             ]
           }
         },
+        {
+          table: {
+            widths: [130, 120, 200],
+            headerRows: 0,
+            body: [
+              ['', 'Dicatat', formatTglID(data.createdAt)],
+              ['', 'Diperbarui', formatTglID(data.updatedAt)],
+            ],
+          },
+          layout: 'noBorders'
+        }
       ],
       styles: {
         header: {
@@ -253,7 +287,9 @@ module.exports = {
     var PdfPrinter = require('pdfmake');
     var printer = new PdfPrinter(fonts);
     var fs = require('fs');
-    const rootPath = `./public/matrik-files/no-${data.id}.pdf`;
+    const hashCode = s => s.split('').reduce((a, b) => (((a << 5) - a) + b.charCodeAt(0)) | 0, 0)
+    const filename = `data-${data.nik}-${data.id}-${Math.abs(hashCode(data.nik))}`;
+    const rootPath = `./public/matrik-files/${filename}.pdf`;
     if (fs.existsSync(rootPath)) {
       fs.unlinkSync(rootPath);
     }
@@ -268,8 +304,7 @@ module.exports = {
       })
       pdfDoc.end();
     });
-    return ctx.redirect('/matrik-files/no-' + data.id + '.pdf');
-
+    return ctx.redirect(`/matrik-files/${filename}.pdf`);
   }
 
 }
