@@ -7,7 +7,7 @@ const fonts = {
   }
 }
 
-const formatTglID = (tgl) => new Date(tgl).toLocaleString('id-ID', {
+const formatTglID = (tgl) => new Date(tgl).toLocaleString('id', {
   timeZone: 'Asia/Jakarta',
   weekday: 'long',
   year: 'numeric',
