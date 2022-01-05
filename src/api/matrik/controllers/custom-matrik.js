@@ -19,6 +19,9 @@ const formatTglID = (tgl) => new Date(tgl).toLocaleString('id', {
   timeZoneName: 'short',
 }).replace(/\./g, ':');
 
+const fs = require('fs');
+const ExcelJS = require('exceljs');
+
 module.exports = {
   async print(ctx) {
     const {
@@ -76,7 +79,7 @@ module.exports = {
                   alignment: 'center'
                 }, {
                   //image: './public' + sertifikasi.data_snapshot.dok[0].url,
-                  ...image(data.pasFoto, 100),
+                  ...image(data.pasFoto, 80),
                   margin: [20, 0, 20, 20]
                 }, {
                   text: "als",
@@ -123,7 +126,7 @@ module.exports = {
                 layout: 'noBorders'
               }, '', ''],
               [{
-                fillColor: 'green',
+                  fillColor: 'green',
                   text: "KELUARGA"
                 },
                 ["NIK", ...(data.keluarga || []).map(x => x.nik || '')],
@@ -305,6 +308,166 @@ module.exports = {
       pdfDoc.end();
     });
     return ctx.redirect(`/matrik-files/${filename}.pdf`);
-  }
+  },
+  async summary(ctx) {
+    // get monthly summary of data
+    const {
+      startDate,
+      endDate
+    } = ctx.request.query;
+    const start = new Date(startDate || new Date(Date.now() - 86400000 * 30));
+    const end = new Date(endDate || new Date());
+    const data = await strapi.db.query('api::matrik.matrik').findMany({
+      where: {
+        createdAt: {
+          $gte: start,
+          $lte: end
+        },
+      },
+      limit: null,
+    });
 
+    function aggregate(data, key) {
+      return data.reduce((acc, cur) => {
+        if (cur[key]) {
+          acc[cur[key]] = (acc[cur[key]] || 0) + 1;
+        }
+        return acc;
+      }, {});
+    }
+    var getDaysArray = function (start, end) {
+      for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+        arr.push(new Date(dt));
+      }
+      return arr;
+    };
+
+    function expandDays(data) {
+      const days = getDaysArray(start, end);
+      const daysKey = {};
+      days.forEach(x => {
+        var k = x.toISOString().slice(0, 10);
+        daysKey[k] = data[k] || 0;
+      });
+      return daysKey;
+    }
+    const summary = {
+      total: data.length,
+      perDay: expandDays(data.reduce((acc, cur) => {
+        var d = new Date(cur.createdAt).toISOString().slice(0, 10);
+        acc[d] = (acc[d] || 0) + 1;
+        return acc;
+      }, {})),
+      jenisPekerjaan: aggregate(data, 'jenisPekerjaan'),
+      pendidikanTerakhir: aggregate(data, 'pendidikanTerakhir'),
+      jenisKelamin: aggregate(data, 'jenisKelamin'),
+      agama: aggregate(data, 'agama'),
+      statusKawin: aggregate(data, 'statusKawin'),
+      kecamatan: aggregate(data, 'kecamatan'),
+    };
+    return summary;
+  },
+  async export (ctx) {
+    const workbook = new ExcelJS.Workbook();
+    const worksheet1 = workbook.addWorksheet('Data');
+    worksheet1.columns = [{
+      header: 'NIK',
+      key: 'nik',
+    }, {
+      header: 'Kasus',
+      key: 'kasus',
+    }, {
+      header: 'Nama Alias',
+      key: 'namaAlias',
+    }, {
+      header: 'Nama Lengkap',
+      key: 'nama',
+    }, {
+      header: 'No Handphone',
+      key: 'noHandphone',
+    }, {
+      header: 'Tempat Lahir',
+      key: 'tempatLahir',
+    }, {
+      header: 'Tanggal Lahir',
+      key: 'tanggalLahir',
+    }, {
+      header: 'Jenis Kelamin',
+      key: 'jenisKelamin',
+    }, {
+      header: 'Jenis Pekerjaan',
+      key: 'jenisPekerjaan',
+    }, {
+      header: 'Status Kawin',
+      key: 'statusKawin',
+    }, {
+      header: 'Agama',
+      key: 'agama',
+    }, {
+      header: 'Pendidikan Terakhir',
+      key: 'pendidikanTerakhir',
+    }, {
+      header: 'Alamat',
+      key: 'alamat',
+    }, {
+      header: 'RT/RW',
+      key: 'rtRw',
+    }, {
+      header: 'Kelurahan',
+      key: 'kelurahan',
+    }, {
+      header: 'Kecamatan',
+      key: 'kecamatan',
+    }, {
+      header: 'Kabupaten',
+      key: 'kabupaten',
+    }, {
+      header: 'Propinsi',
+      key: 'propinsi',
+    }, {
+      header: 'Nama Ayah',
+      key: 'namaAyah',
+    }, {
+      header: 'Nama Ibu',
+      key: 'namaIbu',
+    }, {
+      header: 'NIK Ayah',
+      key: 'nikAyah',
+    }, {
+      header: 'NIK Ibu',
+      key: 'nikIbu',
+    }, {
+      header: 'Peran',
+      key: 'peran',
+    }, {
+      header: 'BAP',
+      key: 'bap',
+    }, {
+      header: 'Passport',
+      key: 'passport',
+    }, {
+      header: 'Pendanaan',
+      key: 'pendanaan',
+    }, {
+      header: 'Informasi Teknis',
+      key: 'informasiTeknis',
+    }, {
+      header: 'Lapangan',
+      key: 'lapangan',
+    }];
+    const rootDir = `./public/exports`;
+    const rootPath = `./public/exports/data-${new Date().toISOString().replace(/^\d/g, '')}.xlsx`;
+    if (fs.existsSync(rootDir))
+      fs.rmdirSync(rootDir, {
+        recursive: true,
+        force: true,
+      });
+    fs.mkdirSync(rootDir, {
+      recursive: true,
+    });
+    worksheet1.w
+  },
+  async import(ctx) {
+
+  }
 }

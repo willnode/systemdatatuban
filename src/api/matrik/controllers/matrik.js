@@ -7,11 +7,9 @@
 const {
   createCoreController
 } = require('@strapi/strapi').factories;
-
+const cust = require('./custom-matrik');
 const controller = createCoreController('api::matrik.matrik', () => ({
-    async print(ctx) {
-        return await require('./custom-matrik').print(ctx);
-    }
+   ...cust,
 }));
 
 module.exports = controller;

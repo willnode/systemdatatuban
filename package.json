@@ -12,9 +12,10 @@
   },
   "devDependencies": {},
   "dependencies": {
-    "@strapi/plugin-i18n": "4.0.0",
-    "@strapi/plugin-users-permissions": "4.0.0",
-    "@strapi/strapi": "4.0.0",
+    "@strapi/plugin-i18n": "4.0.2",
+    "@strapi/plugin-users-permissions": "4.0.2",
+    "@strapi/strapi": "4.0.2",
+    "exceljs": "^4.3.0",
     "full-icu": "^1.4.0",
     "markdown-it": "^12.3.0",
     "mysql": "^2.18.1",
