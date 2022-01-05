@@ -71,3 +71,34 @@ index fb11464..764e2d4 100644
                            {allowedActions.canDelete && (
                              <DeleteLink
                                isCreatingEntry={isCreatingEntry}
+diff --git a/node_modules/@strapi/admin/admin/src/content-manager/pages/ListView/index.js b/node_modules/@strapi/admin/admin/src/content-manager/pages/ListView/index.js
+index 4e785f5..afbc65a 100644
+--- a/node_modules/@strapi/admin/admin/src/content-manager/pages/ListView/index.js
++++ b/node_modules/@strapi/admin/admin/src/content-manager/pages/ListView/index.js
+@@ -28,6 +28,7 @@ import { Link } from '@strapi/design-system/Link';
+ import ArrowLeft from '@strapi/icons/ArrowLeft';
+ import Plus from '@strapi/icons/Plus';
+ import Cog from '@strapi/icons/Cog';
++import Download from '@strapi/icons/Download';
+ import axios from 'axios';
+ import { axiosInstance } from '../../../core/utils';
+ import { InjectionZone } from '../../../shared/components';
+@@ -297,6 +298,18 @@ function ListView({
+                     })}
+                   />
+                 </Box>
++                <Box paddingTop={1} paddingBottom={1}>
++                  <IconButtonCustom
++                    onClick={() => {
++                      window.open('/api/matriks/export/', '_blank');
++                      // trackUsage('willEditListLayout');
++
++                      // push({ pathname: `${slug}/configurations/list`, search: pluginsQueryParams });
++                    }}
++                    icon={<Download />}
++                    label={'Export Data'}
++                  />
++                </Box>
+               </CheckPermissions>
+             </>
+           }

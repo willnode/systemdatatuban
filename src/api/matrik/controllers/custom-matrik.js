@@ -455,8 +455,12 @@ module.exports = {
       header: 'Lapangan',
       key: 'lapangan',
     }];
+    const data = await strapi.db.query('api::matrik.matrik').findMany({
+      limit: null,
+    });
+    worksheet1.addRows(data);
     const rootDir = `./public/exports`;
-    const rootPath = `./public/exports/data-${new Date().toISOString().replace(/^\d/g, '')}.xlsx`;
+    const rootPath = `./public/exports/data-${new Date().toISOString().replace(/[^\d]/g, '')}.xlsx`;
     if (fs.existsSync(rootDir))
       fs.rmdirSync(rootDir, {
         recursive: true,
@@ -465,7 +469,11 @@ module.exports = {
     fs.mkdirSync(rootDir, {
       recursive: true,
     });
-    worksheet1.w
+    await workbook.xlsx.writeFile(rootPath);
+    // await zipdir(rootPath, {
+    //   saveTo: `${rootPath}/tryout-${tryout.slug}.zip`
+    // });
+    return ctx.redirect(rootPath.substring('./public'.length));
   },
   async import(ctx) {
 
