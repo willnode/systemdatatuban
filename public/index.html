@@ -147,13 +147,23 @@
             data: Object.values(data.perDay),
             ...genColor(42),
           }]
+        },
+        options: {
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              ticks: {
+                stepSize: 0.5
+              }
+            }
+          }
         }
       });
 
       for (const attr of ['jenisPekerjaan', 'pendidikanTerakhir', 'jenisKelamin', 'agama', 'statusKawin',
           'kecamatan'
         ]) {
-            ctx =  document.getElementById('chart-' + attr).getContext('2d');
+        ctx = document.getElementById('chart-' + attr).getContext('2d');
         miniCharts.push(new Chart(ctx, {
           type: 'pie',
           data: {
