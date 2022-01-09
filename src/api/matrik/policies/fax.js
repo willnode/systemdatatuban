@@ -30,8 +30,9 @@ module.exports = async (ctx, config, {
             <body>
             <script>
             var x = new URLSearchParams(location.search.substring(1));
-            if (localStorage.getItem('jwtToken') && !x.has('jwtToken')) {
-                x.set('jwtToken', JSON.parse(localStorage.getItem('jwtToken')));
+            var token = localStorage.getItem('jwtToken') || sessionStorage.getItem('jwtToken');
+            if (token && !x.has('jwtToken')) {
+                x.set('jwtToken', JSON.parse(token));
                 location.href = location.origin + location.pathname + '?' + x.toString();
             } else {
                 document.write('<h1>You are not authorized to access this page</h1>');
