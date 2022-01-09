@@ -21,6 +21,9 @@ const formatTglID = (tgl) => new Date(tgl).toLocaleString('id', {
 
 const fs = require('fs');
 const ExcelJS = require('exceljs');
+const Schema = require('../content-types/matrik/schema.json');
+
+const enumasies = ['jenisKelamin', 'jenisPekerjaan', 'statusKawin', 'agama', 'pendidikanTerakhir']
 
 module.exports = {
   async print(ctx) {
@@ -28,7 +31,9 @@ module.exports = {
       id
     } = ctx.params;
 
-    function image(x, fit = {fit: [150, 150]}) {
+    function image(x, fit = {
+      fit: [150, 150]
+    }) {
       return {
         alignment: 'center',
         image: './public' + (x ? x.url : '/placeholder.png'),
@@ -79,7 +84,9 @@ module.exports = {
                   margin: 10,
                   alignment: 'center'
                 }, {
-                  ...image(data.pasFoto, {width: 80}),
+                  ...image(data.pasFoto, {
+                    width: 80
+                  }),
                   margin: [10, 0, 10, 20]
                 }, {
                   text: "als",
@@ -173,7 +180,16 @@ module.exports = {
                 table: {
                   widths: ['*'],
                   body: [
-                    [{alignment: 'center', text:"KETERANGAN\n"}], [[({alignment: 'justify', text:data.pendanaanKeterangan || ''})]]
+                    [{
+                      alignment: 'center',
+                      text: "KETERANGAN\n"
+                    }],
+                    [
+                      [({
+                        alignment: 'left',
+                        text: data.pendanaanKeterangan || ''
+                      })]
+                    ]
                   ]
                 },
                 layout: 'noBorders',
@@ -183,7 +199,10 @@ module.exports = {
                 table: {
                   widths: ['*'],
                   body: [
-                    [{alignment: 'center', text:"DOKUMENTASI\n"}], ...(data.pendanaanDokumentasi || []).map(x => ([{
+                    [{
+                      alignment: 'center',
+                      text: "DOKUMENTASI\n"
+                    }], ...(data.pendanaanDokumentasi || []).map(x => ([{
                       ...image(x),
                     }]))
                   ]
@@ -220,7 +239,16 @@ module.exports = {
                 table: {
                   widths: ['*'],
                   body: [
-                    [{alignment: 'center', text:"KETERANGAN\n"}], [[({alignment: 'justify', text:data.mediaSosialKeterangan || ''})]]
+                    [{
+                      alignment: 'center',
+                      text: "KETERANGAN\n"
+                    }],
+                    [
+                      [({
+                        alignment: 'left',
+                        text: data.mediaSosialKeterangan || ''
+                      })]
+                    ]
                   ]
                 },
                 layout: 'noBorders',
@@ -230,7 +258,10 @@ module.exports = {
                 table: {
                   widths: ['*'],
                   body: [
-                    [{alignment: 'center', text:"DOKUMENTASI\n"}], ...(data.mediaSosialDokumentasi || []).map(x => ([{
+                    [{
+                      alignment: 'center',
+                      text: "DOKUMENTASI\n"
+                    }], ...(data.mediaSosialDokumentasi || []).map(x => ([{
                       ...image(x),
                     }]))
                   ]
@@ -250,7 +281,16 @@ module.exports = {
                 table: {
                   widths: ['*'],
                   body: [
-                    [{alignment: 'center', text:"KETERANGAN\n"}], [[({alignment: 'justify', text:data.lapanganKeterangan || ''})]]
+                    [{
+                      alignment: 'center',
+                      text: "KETERANGAN\n"
+                    }],
+                    [
+                      [({
+                        alignment: 'left',
+                        text: data.lapanganKeterangan || ''
+                      })]
+                    ]
                   ]
                 },
                 layout: 'noBorders',
@@ -260,7 +300,10 @@ module.exports = {
                 table: {
                   widths: ['*'],
                   body: [
-                    [{alignment: 'center', text:"DOKUMENTASI\n"}], ...(data.lapanganDokumentasi || []).map(x => ([{
+                    [{
+                      alignment: 'center',
+                      text: "DOKUMENTASI\n"
+                    }], ...(data.lapanganDokumentasi || []).map(x => ([{
                       ...image(x),
                     }]))
                   ]
@@ -328,7 +371,7 @@ module.exports = {
       })
       pdfDoc.end();
     });
-    return ctx.redirect(`/matrik-files/${filename}.pdf`);
+    return ctx.redirect(`/matrik-files/${filename}.pdf` + '?snip=' + new Date().toISOString().replace(/[^\d]/g, ''));
   },
   async summary(ctx) {
     // get monthly summary of data
@@ -391,95 +434,146 @@ module.exports = {
   async export (ctx) {
     const workbook = new ExcelJS.Workbook();
     const worksheet1 = workbook.addWorksheet('Data');
+    const worksheet2 = workbook.addWorksheet('Opsi');
     worksheet1.columns = [{
+      header: 'ID KASUS',
+      width: 10,
+      key: 'id',
+    }, {
       header: 'NIK',
+      width: 20,
       key: 'nik',
     }, {
       header: 'Kasus',
+      width: 20,
       key: 'kasus',
     }, {
       header: 'Nama Alias',
+      width: 20,
       key: 'namaAlias',
     }, {
       header: 'Nama Lengkap',
+      width: 20,
       key: 'nama',
     }, {
       header: 'No Handphone',
+      width: 20,
       key: 'noHandphone',
     }, {
       header: 'Tempat Lahir',
+      width: 20,
       key: 'tempatLahir',
     }, {
+      width: 20,
       header: 'Tanggal Lahir',
       key: 'tanggalLahir',
     }, {
       header: 'Jenis Kelamin',
+      width: 20,
       key: 'jenisKelamin',
     }, {
       header: 'Jenis Pekerjaan',
+      width: 20,
       key: 'jenisPekerjaan',
     }, {
       header: 'Status Kawin',
+      width: 20,
       key: 'statusKawin',
     }, {
       header: 'Agama',
       key: 'agama',
+      width: 20,
     }, {
       header: 'Pendidikan Terakhir',
+      width: 20,
       key: 'pendidikanTerakhir',
     }, {
       header: 'Alamat',
+      width: 20,
       key: 'alamat',
     }, {
       header: 'RT/RW',
+      width: 20,
       key: 'rtRw',
     }, {
       header: 'Kelurahan',
+      width: 20,
       key: 'kelurahan',
     }, {
       header: 'Kecamatan',
+      width: 20,
       key: 'kecamatan',
     }, {
       header: 'Kabupaten',
+      width: 20,
       key: 'kabupaten',
     }, {
       header: 'Propinsi',
+      width: 20,
       key: 'propinsi',
     }, {
       header: 'Nama Ayah',
+      width: 20,
       key: 'namaAyah',
     }, {
       header: 'Nama Ibu',
+      width: 20,
       key: 'namaIbu',
     }, {
       header: 'NIK Ayah',
+      width: 20,
       key: 'nikAyah',
     }, {
       header: 'NIK Ibu',
+      width: 20,
       key: 'nikIbu',
     }, {
       header: 'Peran',
+      width: 30,
       key: 'peran',
     }, {
       header: 'BAP',
+      width: 30,
       key: 'bap',
     }, {
       header: 'Passport',
+      width: 30,
       key: 'passport',
     }, {
       header: 'Pendanaan',
+      width: 30,
       key: 'pendanaan',
     }, {
       header: 'Informasi Teknis',
+      width: 30,
       key: 'informasiTeknis',
     }, {
       header: 'Lapangan',
+      width: 30,
       key: 'lapangan',
     }];
     const data = await strapi.db.query('api::matrik.matrik').findMany({
       limit: null,
     });
     worksheet1.addRows(data);
+    for (let i = 0; i < enumasies.length; i++) {
+      worksheet2.getCell(1, i + 1).value = enumasies[i];
+      for (let j = 0; j < Schema.attributes[enumasies[i]].enum.length; j++) {
+        const element = Schema.attributes[enumasies[i]].enum[j];
+        worksheet2.getCell(j + 2, i + 1).value = element;
+      }
+      var columnAlphabet = String.fromCharCode(65 + i);
+      var validation = {
+        type: 'list',
+        allowBlank: false,
+        formulae: [`'Opsi'!$${columnAlphabet}$2:$${columnAlphabet}$999`],
+        showErrorMessage: true,
+        errorStyle: 'error',
+      }
+      worksheet1.getColumn(1 + worksheet1.columns.findIndex(x => x._key == enumasies[i])).eachCell(x => {
+        x.dataValidation = validation
+      });
+    }
     const rootDir = `./public/exports`;
     const rootPath = `./public/exports/data-${new Date().toISOString().replace(/[^\d]/g, '')}.xlsx`;
     if (fs.existsSync(rootDir))
@@ -497,6 +591,115 @@ module.exports = {
     return ctx.redirect(rootPath.substring('./public'.length));
   },
   async import(ctx) {
-
+    if (!ctx.request.files || !ctx.request.files.data) {
+      return `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Import</title>
+      </head>
+      <body>
+      <form id="form" method="post" enctype="multipart/form-data">
+        Silahkan pilih file excel yang akan di import:<br>
+        <input id="input" type="file" name="data" />
+        </form><script>
+        document.getElementById('input').onchange = function() {
+          document.getElementById('form').submit();
+        };
+        window.onload = function() {
+          document.getElementById('input').focus();
+          document.getElementById('input').click();
+        };
+        </script>
+        </body>
+        </html>`;
+    }
+    const {
+      path,
+      name,
+      type
+    } = ctx.request.files.data;
+    const workbook = new ExcelJS.Workbook();
+    await workbook.xlsx.readFile(path);
+    const worksheet1 = workbook.getWorksheet('Data');
+    const newData = [];
+    worksheet1.eachRow((row, rowNumber) => {
+      if (rowNumber > 1) {
+        newData.push({
+          id: row.getCell(1).value,
+          nik: row.getCell(2).value,
+          kasus: row.getCell(3).value,
+          namaAlias: row.getCell(4).value,
+          nama: row.getCell(5).value,
+          noHandphone: row.getCell(6).value,
+          tempatLahir: row.getCell(7).value,
+          tanggalLahir: row.getCell(8).value,
+          jenisKelamin: row.getCell(9).value,
+          jenisPekerjaan: row.getCell(10).value,
+          statusKawin: row.getCell(11).value,
+          agama: row.getCell(12).value,
+          pendidikanTerakhir: row.getCell(13).value,
+          alamat: row.getCell(15).value,
+          rtRw: row.getCell(16).value,
+          kelurahan: row.getCell(17).value,
+          kecamatan: row.getCell(18).value,
+          kabupaten: row.getCell(19).value,
+          propinsi: row.getCell(20).value,
+          namaAyah: row.getCell(21).value,
+          namaIbu: row.getCell(22).value,
+          nikAyah: row.getCell(23).value,
+          nikIbu: row.getCell(24).value,
+          peran: row.getCell(25).value,
+          bap: row.getCell(26).value,
+          passport: row.getCell(27).value,
+          pendanaan: row.getCell(28).value,
+          informasiTeknis: row.getCell(29).value,
+          lapangan: row.getCell(30).value,
+        });
+      }
+    });
+    const oldData = await strapi.db.query('api::matrik.matrik').findMany({
+      limit: null,
+    });
+    var created = 0,
+      updated = 0;
+    for (let i = 0; i < newData.length; i++) {
+      const newItem = newData[i];
+      const oldItem = oldData.find(q => q.id == newItem.id);
+      if (oldItem) {
+        await strapi.db.query('api::matrik.matrik').update({
+          where: {
+            id: oldItem.id
+          },
+          data: newItem
+        });
+        updated++;
+      } else {
+        await strapi.db.query('api::matrik.matrik').create({
+          data: newItem
+        });
+        created++;
+      }
+    }
+    return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Import</title>
+    </head>
+    <body>
+    <script>
+    alert('${created} data baru telah ditambahkan, ${updated} data telah diupdate');
+    if (window.opener) window.opener.location.reload();
+    window.close();
+    </script>
+    </body>
+    `;
   }
 }

@@ -7,6 +7,7 @@ module.exports = {
         handler: 'matrik.print',
         config: {
           auth: false,
+          policies: ['api::matrik.fax']
         },
       },{
         method: 'GET',
@@ -21,6 +22,7 @@ module.exports = {
         handler: 'matrik.export',
         config: {
           auth: false,
+          policies: ['api::matrik.fax']
         },
       },{
         method: 'POST',
@@ -28,6 +30,15 @@ module.exports = {
         handler: 'matrik.import',
         config: {
           auth: false,
+          policies: ['api::matrik.fax']
+        },
+      },{
+        method: 'GET',
+        path: '/matriks/import',
+        handler: 'matrik.import',
+        config: {
+          auth: false,
+          policies: ['api::matrik.fax']
         },
       },
     ],
