@@ -85,9 +85,9 @@ module.exports = {
                   alignment: 'center'
                 }, {
                   ...image(data.pasFoto, {
-                    width: 80
+                    width: 100
                   }),
-                  margin: [10, 0, 10, 20]
+                  margin: [0, 0, 0, 20]
                 }, {
                   text: "als",
                   margin: 5,
