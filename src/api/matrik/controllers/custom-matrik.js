@@ -28,10 +28,11 @@ module.exports = {
       id
     } = ctx.params;
 
-    function image(x, fit = 150) {
+    function image(x, fit = {fit: [150, 150]}) {
       return {
+        alignment: 'center',
         image: './public' + (x ? x.url : '/placeholder.png'),
-        fit: [fit, fit],
+        ...fit,
       };
     }
 
@@ -63,7 +64,7 @@ module.exports = {
     var dd = {
       pageSize: 'A4',
       content: [{
-          text: data.nik + "",
+          text: "MATRIKS",
           style: 'header',
         },
         {
@@ -78,9 +79,8 @@ module.exports = {
                   margin: 10,
                   alignment: 'center'
                 }, {
-                  //image: './public' + sertifikasi.data_snapshot.dok[0].url,
-                  ...image(data.pasFoto, 80),
-                  margin: [20, 0, 20, 20]
+                  ...image(data.pasFoto, {width: 80}),
+                  margin: [10, 0, 10, 20]
                 }, {
                   text: "als",
                   margin: 5,
@@ -170,13 +170,20 @@ module.exports = {
                 text: data.pendanaan || ''
               }, '', ''],
               ['', {
-                text: "KETERANGAN\n" + (data.pendanaanKeterangan || '')
+                table: {
+                  widths: ['*'],
+                  body: [
+                    [{alignment: 'center', text:"KETERANGAN\n"}], [[({alignment: 'justify', text:data.pendanaanKeterangan || ''})]]
+                  ]
+                },
+                layout: 'noBorders',
+                alignment: 'center'
               }, {
                 colSpan: 2,
-                margin: 10,
                 table: {
+                  widths: ['*'],
                   body: [
-                    ["DOKUMENTASI\n"], ...(data.pendanaanDokumentasi || []).map(x => ([{
+                    [{alignment: 'center', text:"DOKUMENTASI\n"}], ...(data.pendanaanDokumentasi || []).map(x => ([{
                       ...image(x),
                     }]))
                   ]
@@ -210,13 +217,20 @@ module.exports = {
                 layout: 'noBorders',
               }, '', ''],
               ['', {
-                text: "KETERANGAN\n" + (data.mediaSosialKeterangan || '')
+                table: {
+                  widths: ['*'],
+                  body: [
+                    [{alignment: 'center', text:"KETERANGAN\n"}], [[({alignment: 'justify', text:data.mediaSosialKeterangan || ''})]]
+                  ]
+                },
+                layout: 'noBorders',
+                alignment: 'center'
               }, {
                 colSpan: 2,
-                margin: 10,
                 table: {
+                  widths: ['*'],
                   body: [
-                    ["DOKUMENTASI\n"], ...(data.mediaSosialDokumentasi || []).map(x => ([{
+                    [{alignment: 'center', text:"DOKUMENTASI\n"}], ...(data.mediaSosialDokumentasi || []).map(x => ([{
                       ...image(x),
                     }]))
                   ]
@@ -233,13 +247,20 @@ module.exports = {
                 text: data.lapangan || ''
               }, '', ''],
               ['', {
-                text: "KETERANGAN\n" + (data.lapanganKeterangan || '')
+                table: {
+                  widths: ['*'],
+                  body: [
+                    [{alignment: 'center', text:"KETERANGAN\n"}], [[({alignment: 'justify', text:data.lapanganKeterangan || ''})]]
+                  ]
+                },
+                layout: 'noBorders',
+                alignment: 'center'
               }, {
                 colSpan: 2,
-                margin: 10,
                 table: {
+                  widths: ['*'],
                   body: [
-                    ["DOKUMENTASI\n"], ...(data.lapanganDokumentasi || []).map(x => ([{
+                    [{alignment: 'center', text:"DOKUMENTASI\n"}], ...(data.lapanganDokumentasi || []).map(x => ([{
                       ...image(x),
                     }]))
                   ]
@@ -362,7 +383,7 @@ module.exports = {
       pendidikanTerakhir: aggregate(data, 'pendidikanTerakhir'),
       jenisKelamin: aggregate(data, 'jenisKelamin'),
       agama: aggregate(data, 'agama'),
-      statusKawin: aggregate(data, 'statusKawin'),
+      kasus: aggregate(data, 'kasus'),
       kecamatan: aggregate(data, 'kecamatan'),
     };
     return summary;
