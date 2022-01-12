@@ -61,7 +61,7 @@
       <main class="col-12">
         <div
           class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-          <h1 class="h2">Jumlah Kasus Baru: <span id="jml"></span></h1>
+          <h1 class="h2">Jumlah Kelompok Baru: <span id="jml"></span></h1>
           <div class="btn-toolbar mb-2 mb-md-0">
             <div class="dropdown show">
               <button type="button" id="dropdownMenuButton" class="btn btn-sm btn-outline-secondary dropdown-toggle"
@@ -92,28 +92,28 @@
         </div>
       </div>
       <div class="col-md-6 col-lg-4">
-        <h3 class="text-center">Rasio Kasus</h3>
-        <canvas class="my-4 w-100" id="chart-kasus" width="100%" height="50px"></canvas>
+        <h3 class="text-center">Kelompok</h3>
+        <canvas class="my-4 w-100" id="chart-kelompok" width="100%" height="50px"></canvas>
       </div>
       <div class="col-md-6 col-lg-4">
-        <h3 class="text-center">Rasio Jenis Pekerjaan</h3>
+        <h3 class="text-center">Jenis Pekerjaan</h3>
         <canvas class="my-4 w-100" id="chart-jenisPekerjaan" width="100%" height="50px"></canvas>
       </div>
       <div class="col-md-6 col-lg-4">
-        <h3 class="text-center">Rasio Pendidikan Terakhir</h3>
+        <h3 class="text-center">Pendidikan Terakhir</h3>
         <canvas class="my-4 w-100" id="chart-pendidikanTerakhir" width="100%" height="50px"></canvas>
       </div>
       <div class="col-md-6 col-lg-4">
-        <h3 class="text-center">Rasio Jenis Kelamin</h3>
+        <h3 class="text-center">Jenis Kelamin</h3>
         <canvas class="my-4 w-100" id="chart-jenisKelamin" width="100%" height="50px"></canvas>
       </div>
       <div class="col-md-6 col-lg-4">
-        <h3 class="text-center">Rasio Agama</h3>
+        <h3 class="text-center">Agama</h3>
         <canvas class="my-4 w-100" id="chart-agama" width="100%" height="50px"></canvas>
       </div>
       <div class="col-md-6 col-lg-4">
-        <h3 class="text-center">Rasio Kecamatan</h3>
-        <canvas class="my-4 w-100" id="chart-kecamatan" width="100%" height="50px"></canvas>
+        <h3 class="text-center">Kecamatan</h3>
+        <canvas class="my-4 w-100" id="chart-kabupaten" width="100%" height="50px"></canvas>
       </div>
     </div>
   </div>
@@ -162,8 +162,8 @@
         }
       });
 
-      for (const attr of ['jenisPekerjaan', 'pendidikanTerakhir', 'jenisKelamin', 'agama', 'kasus',
-          'kecamatan'
+      for (const attr of ['jenisPekerjaan', 'pendidikanTerakhir', 'jenisKelamin', 'agama', 'kelompok',
+          'kabupaten'
         ]) {
         ctx = document.getElementById('chart-' + attr).getContext('2d');
         var values = Object.values(data[attr]);

@@ -107,7 +107,8 @@ module.exports = {
                   widths: ['auto', 'auto', '*'],
                   headerRows: 0,
                   body: [
-                    ['KASUS', ':', data.kasus || ''],
+                    ['KELOMPOK', ':', data.kelompok || ''],
+                    ['SKALA/STATUS', ':', data.skalaStatus || ''],
                     ['NAMA', ':', data.nama || ''],
                     ['NIK', ':', data.nik || ''],
                     ['NO. KARTU KELUARGA', ':', data.noKartuKeluarga || ''],
@@ -426,8 +427,8 @@ module.exports = {
       pendidikanTerakhir: aggregate(data, 'pendidikanTerakhir'),
       jenisKelamin: aggregate(data, 'jenisKelamin'),
       agama: aggregate(data, 'agama'),
-      kasus: aggregate(data, 'kasus'),
-      kecamatan: aggregate(data, 'kecamatan'),
+      kelompok: aggregate(data, 'kelompok'),
+      kabupaten: aggregate(data, 'kabupaten'),
     };
     return summary;
   },
@@ -439,118 +440,147 @@ module.exports = {
       header: 'ID KASUS',
       width: 10,
       key: 'id',
+      numFmt: '@',
     }, {
       header: 'NIK',
       width: 20,
       key: 'nik',
+      numFmt: '@',
     }, {
-      header: 'Kasus',
+      header: 'Kelompok',
       width: 20,
-      key: 'kasus',
+      key: 'kelompok',
+      numFmt: '@',
     }, {
       header: 'Nama Alias',
       width: 20,
       key: 'namaAlias',
+      numFmt: '@',
     }, {
       header: 'Nama Lengkap',
       width: 20,
       key: 'nama',
+      numFmt: '@',
     }, {
       header: 'No Handphone',
       width: 20,
       key: 'noHandphone',
+      numFmt: '@',
     }, {
       header: 'Tempat Lahir',
       width: 20,
       key: 'tempatLahir',
+      numFmt: '@',
     }, {
       width: 20,
       header: 'Tanggal Lahir',
       key: 'tanggalLahir',
+      numFmt: '@',
     }, {
       header: 'Jenis Kelamin',
       width: 20,
       key: 'jenisKelamin',
+      numFmt: '@',
     }, {
       header: 'Jenis Pekerjaan',
       width: 20,
       key: 'jenisPekerjaan',
+      numFmt: '@',
     }, {
       header: 'Status Kawin',
       width: 20,
       key: 'statusKawin',
+      numFmt: '@',
     }, {
       header: 'Agama',
       key: 'agama',
       width: 20,
+      numFmt: '@',
     }, {
       header: 'Pendidikan Terakhir',
       width: 20,
       key: 'pendidikanTerakhir',
+      numFmt: '@',
     }, {
       header: 'Alamat',
       width: 20,
       key: 'alamat',
+      numFmt: '@',
     }, {
       header: 'RT/RW',
       width: 20,
       key: 'rtRw',
+      numFmt: '@',
     }, {
       header: 'Kelurahan',
       width: 20,
       key: 'kelurahan',
+      numFmt: '@',
     }, {
       header: 'Kecamatan',
       width: 20,
       key: 'kecamatan',
+      numFmt: '@',
     }, {
       header: 'Kabupaten',
       width: 20,
       key: 'kabupaten',
+      numFmt: '@',
     }, {
       header: 'Propinsi',
       width: 20,
       key: 'propinsi',
+      numFmt: '@',
     }, {
       header: 'Nama Ayah',
       width: 20,
       key: 'namaAyah',
+      numFmt: '@',
     }, {
       header: 'Nama Ibu',
       width: 20,
       key: 'namaIbu',
+      numFmt: '@',
     }, {
       header: 'NIK Ayah',
       width: 20,
       key: 'nikAyah',
+      numFmt: '@',
     }, {
       header: 'NIK Ibu',
       width: 20,
       key: 'nikIbu',
+      numFmt: '@',
     }, {
       header: 'Peran',
       width: 30,
       key: 'peran',
+      numFmt: '@',
     }, {
       header: 'BAP',
       width: 30,
       key: 'bap',
+      numFmt: '@',
     }, {
       header: 'Passport',
       width: 30,
       key: 'passport',
+      numFmt: '@',
     }, {
       header: 'Pendanaan',
       width: 30,
       key: 'pendanaan',
+      numFmt: '@',
     }, {
       header: 'Informasi Teknis',
       width: 30,
       key: 'informasiTeknis',
+      numFmt: '@',
     }, {
       header: 'Lapangan',
       width: 30,
       key: 'lapangan',
+      numFmt: '@',
     }];
     const data = await strapi.db.query('api::matrik.matrik').findMany({
       limit: null,
@@ -631,7 +661,7 @@ module.exports = {
         newData.push({
           id: row.getCell(1).value,
           nik: row.getCell(2).value,
-          kasus: row.getCell(3).value,
+          kelompok: row.getCell(3).value,
           namaAlias: row.getCell(4).value,
           nama: row.getCell(5).value,
           noHandphone: row.getCell(6).value,

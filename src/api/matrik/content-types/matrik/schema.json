@@ -12,7 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "kasus": {
+    "kelompok": {
+      "type": "string"
+    },
+    "skalaStatus": {
       "type": "string"
     },
     "nama": {
