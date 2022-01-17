@@ -26,6 +26,7 @@ const {
   exec,
   execSync
 } = require('child_process');
+const path = require('path');
 
 const enumasies = ['jenisKelamin', 'jenisPekerjaan', 'statusKawin', 'pendidikanTerakhir']
 
@@ -436,7 +437,7 @@ module.exports = {
     return summary;
   },
   async export (ctx) {
-    return ctx.redirect(execSync(`php exporting\\write.php`).toString('utf8'));
+    return ctx.redirect(execSync(`php exporting${path.sep}write.php`).toString('utf8'));
   },
   async exportJSJSJS(ctx) {
     const workbook = new ExcelJS.Workbook();
