@@ -159,18 +159,6 @@
         "Cerai Mati"
       ]
     },
-    "agama": {
-      "type": "enumeration",
-      "enum": [
-        "Islam",
-        "Kristen",
-        "Katholik",
-        "Hindu",
-        "Budha",
-        "Konghuchu",
-        "Aliran Kepercayaan"
-      ]
-    },
     "pendidikanTerakhir": {
       "type": "enumeration",
       "enum": [

@@ -108,8 +108,8 @@
         <canvas class="my-4 w-100" id="chart-jenisKelamin" width="100%" height="50px"></canvas>
       </div>
       <div class="col-md-6 col-lg-4">
-        <h3 class="text-center">Agama</h3>
-        <canvas class="my-4 w-100" id="chart-agama" width="100%" height="50px"></canvas>
+        <h3 class="text-center">Skala/Status</h3>
+        <canvas class="my-4 w-100" id="chart-skalaStatus" width="100%" height="50px"></canvas>
       </div>
       <div class="col-md-6 col-lg-4">
         <h3 class="text-center">Kabupaten</h3>
@@ -162,7 +162,7 @@
         }
       });
 
-      for (const attr of ['jenisPekerjaan', 'pendidikanTerakhir', 'jenisKelamin', 'agama', 'kelompok',
+      for (const attr of ['jenisPekerjaan', 'pendidikanTerakhir', 'jenisKelamin', 'skalaStatus', 'kelompok',
           'kabupaten'
         ]) {
         ctx = document.getElementById('chart-' + attr).getContext('2d');

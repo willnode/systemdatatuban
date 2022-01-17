@@ -1,0 +1,14 @@
+{
+    "name": "wiiin0de/exporting",
+    "authors": [
+        {
+            "name": "Wildan M",
+            "email": "willnode@wellosoft.net"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.21",
+        "paragonie/easydb": "^2.11",
+        "vlucas/phpdotenv": "^5.4"
+    }
+}

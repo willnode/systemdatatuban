@@ -22,8 +22,12 @@ const formatTglID = (tgl) => new Date(tgl).toLocaleString('id', {
 const fs = require('fs');
 const ExcelJS = require('exceljs');
 const Schema = require('../content-types/matrik/schema.json');
+const {
+  exec,
+  execSync
+} = require('child_process');
 
-const enumasies = ['jenisKelamin', 'jenisPekerjaan', 'statusKawin', 'agama', 'pendidikanTerakhir']
+const enumasies = ['jenisKelamin', 'jenisPekerjaan', 'statusKawin', 'pendidikanTerakhir']
 
 module.exports = {
   async print(ctx) {
@@ -117,7 +121,6 @@ module.exports = {
                     ['JENIS KELAMIN', ':', data.jenisKelamin || ''],
                     ['JENIS PEKERJAAN', ':', data.jenisPekerjaan || ''],
                     ['STATUS KAWIN', ':', data.statusKawin || ''],
-                    ['AGAMA', ':', data.agama || ''],
                     ['PENDIDIKAN TERAKHIR', ':', data.pendidikanTerakhir || ''],
                     ['ALAMAT', ':', data.alamat || ''],
                     ['RT / RW	', ':', data.rtRw || ''],
@@ -426,13 +429,16 @@ module.exports = {
       jenisPekerjaan: aggregate(data, 'jenisPekerjaan'),
       pendidikanTerakhir: aggregate(data, 'pendidikanTerakhir'),
       jenisKelamin: aggregate(data, 'jenisKelamin'),
-      agama: aggregate(data, 'agama'),
+      skalaStatus: aggregate(data, 'skalaStatus'),
       kelompok: aggregate(data, 'kelompok'),
       kabupaten: aggregate(data, 'kabupaten'),
     };
     return summary;
   },
   async export (ctx) {
+    return ctx.redirect(execSync(`php exporting\\write.php`).toString('utf8'));
+  },
+  async exportJSJSJS(ctx) {
     const workbook = new ExcelJS.Workbook();
     const worksheet1 = workbook.addWorksheet('Data');
     const worksheet2 = workbook.addWorksheet('Opsi');
@@ -440,144 +446,144 @@ module.exports = {
       header: 'ID KASUS',
       width: 10,
       key: 'id',
-      numFmt: '@',
+      numFmt: '@', // 1
     }, {
       header: 'NIK',
       width: 20,
       key: 'nik',
-      numFmt: '@',
+      numFmt: '@', // 2
     }, {
       header: 'Kelompok',
       width: 20,
       key: 'kelompok',
+      numFmt: '@', // 3
+    }, {
+      header: 'Skala/Status', // 4
+      key: 'skalaStatus',
+      width: 20,
       numFmt: '@',
     }, {
-      header: 'Nama Alias',
+      header: 'Nama Alias', // 5
       width: 20,
       key: 'namaAlias',
       numFmt: '@',
     }, {
-      header: 'Nama Lengkap',
+      header: 'Nama Lengkap', // 6
       width: 20,
       key: 'nama',
       numFmt: '@',
     }, {
-      header: 'No Handphone',
+      header: 'No Handphone', // 7
       width: 20,
       key: 'noHandphone',
       numFmt: '@',
     }, {
-      header: 'Tempat Lahir',
+      header: 'Tempat Lahir', // 8
       width: 20,
       key: 'tempatLahir',
       numFmt: '@',
     }, {
       width: 20,
-      header: 'Tanggal Lahir',
+      header: 'Tanggal Lahir', // 9
       key: 'tanggalLahir',
       numFmt: '@',
     }, {
-      header: 'Jenis Kelamin',
+      header: 'Jenis Kelamin', // 10
       width: 20,
       key: 'jenisKelamin',
       numFmt: '@',
     }, {
-      header: 'Jenis Pekerjaan',
+      header: 'Jenis Pekerjaan', // 11
       width: 20,
       key: 'jenisPekerjaan',
       numFmt: '@',
     }, {
-      header: 'Status Kawin',
+      header: 'Status Kawin', // 12
       width: 20,
       key: 'statusKawin',
       numFmt: '@',
     }, {
-      header: 'Agama',
-      key: 'agama',
-      width: 20,
-      numFmt: '@',
-    }, {
-      header: 'Pendidikan Terakhir',
+      header: 'Pendidikan Terakhir', // 13
       width: 20,
       key: 'pendidikanTerakhir',
       numFmt: '@',
     }, {
-      header: 'Alamat',
+      header: 'Alamat', // 14
       width: 20,
       key: 'alamat',
       numFmt: '@',
     }, {
-      header: 'RT/RW',
+      header: 'RT/RW', // 15
       width: 20,
       key: 'rtRw',
       numFmt: '@',
     }, {
-      header: 'Kelurahan',
+      header: 'Kelurahan', // 16
       width: 20,
       key: 'kelurahan',
       numFmt: '@',
     }, {
-      header: 'Kecamatan',
+      header: 'Kecamatan', // 17
       width: 20,
       key: 'kecamatan',
       numFmt: '@',
     }, {
-      header: 'Kabupaten',
+      header: 'Kabupaten', // 18
       width: 20,
       key: 'kabupaten',
       numFmt: '@',
     }, {
-      header: 'Propinsi',
+      header: 'Propinsi', // 19
       width: 20,
       key: 'propinsi',
       numFmt: '@',
     }, {
-      header: 'Nama Ayah',
+      header: 'Nama Ayah', // 20
       width: 20,
       key: 'namaAyah',
       numFmt: '@',
     }, {
-      header: 'Nama Ibu',
+      header: 'Nama Ibu', // 21
       width: 20,
       key: 'namaIbu',
       numFmt: '@',
     }, {
-      header: 'NIK Ayah',
+      header: 'NIK Ayah', // 22
       width: 20,
       key: 'nikAyah',
       numFmt: '@',
     }, {
-      header: 'NIK Ibu',
+      header: 'NIK Ibu', // 23
       width: 20,
       key: 'nikIbu',
       numFmt: '@',
     }, {
-      header: 'Peran',
+      header: 'Peran', // 24
       width: 30,
       key: 'peran',
       numFmt: '@',
     }, {
-      header: 'BAP',
+      header: 'BAP', // 25
       width: 30,
       key: 'bap',
       numFmt: '@',
     }, {
-      header: 'Passport',
+      header: 'Passport', // 26
       width: 30,
       key: 'passport',
       numFmt: '@',
     }, {
-      header: 'Pendanaan',
+      header: 'Pendanaan', // 27
       width: 30,
       key: 'pendanaan',
       numFmt: '@',
     }, {
-      header: 'Informasi Teknis',
+      header: 'Informasi Teknis', // 28
       width: 30,
       key: 'informasiTeknis',
       numFmt: '@',
     }, {
-      header: 'Lapangan',
+      header: 'Lapangan', // 29
       width: 30,
       key: 'lapangan',
       numFmt: '@',
@@ -586,6 +592,21 @@ module.exports = {
       limit: null,
     });
     worksheet1.addRows(data);
+    worksheet1.eachRow((row, n) => {
+      if (n == 1) return;
+      for (const x of [2, 7, 22, 23]) {
+        row.getCell(x).value = {
+          formula: `="${row.getCell(x).value}"`
+        };
+      }
+      for (const x of [24, 25, 26, 27, 28, 29]) {
+        row.getCell(x).value = {
+          richText: [{
+            text: row.getCell(x).value || ""
+          }]
+        };
+      }
+    })
     for (let i = 0; i < enumasies.length; i++) {
       worksheet2.getCell(1, i + 1).value = enumasies[i];
       for (let j = 0; j < Schema.attributes[enumasies[i]].enum.length; j++) {
@@ -659,35 +680,35 @@ module.exports = {
     worksheet1.eachRow((row, rowNumber) => {
       if (rowNumber > 1) {
         newData.push({
-          id: row.getCell(1).value,
-          nik: row.getCell(2).value,
-          kelompok: row.getCell(3).value,
-          namaAlias: row.getCell(4).value,
-          nama: row.getCell(5).value,
-          noHandphone: row.getCell(6).value,
-          tempatLahir: row.getCell(7).value,
-          tanggalLahir: row.getCell(8).value,
-          jenisKelamin: row.getCell(9).value,
-          jenisPekerjaan: row.getCell(10).value,
-          statusKawin: row.getCell(11).value,
-          agama: row.getCell(12).value,
-          pendidikanTerakhir: row.getCell(13).value,
-          alamat: row.getCell(15).value,
-          rtRw: row.getCell(16).value,
-          kelurahan: row.getCell(17).value,
-          kecamatan: row.getCell(18).value,
-          kabupaten: row.getCell(19).value,
-          propinsi: row.getCell(20).value,
-          namaAyah: row.getCell(21).value,
-          namaIbu: row.getCell(22).value,
-          nikAyah: row.getCell(23).value,
-          nikIbu: row.getCell(24).value,
-          peran: row.getCell(25).value,
-          bap: row.getCell(26).value,
-          passport: row.getCell(27).value,
-          pendanaan: row.getCell(28).value,
-          informasiTeknis: row.getCell(29).value,
-          lapangan: row.getCell(30).value,
+          id: row.getCell(1).result,
+          nik: row.getCell(2).result,
+          kelompok: row.getCell(3).result,
+          skalaStatus: row.getCell(4).result,
+          namaAlias: row.getCell(5).result,
+          nama: row.getCell(6).result,
+          noHandphone: row.getCell(7).result,
+          tempatLahir: row.getCell(8).result,
+          tanggalLahir: row.getCell(9).result,
+          jenisKelamin: row.getCell(10).result,
+          jenisPekerjaan: row.getCell(11).result,
+          statusKawin: row.getCell(12).result,
+          pendidikanTerakhir: row.getCell(13).result,
+          alamat: row.getCell(14).result,
+          rtRw: row.getCell(15).result,
+          kelurahan: row.getCell(16).result,
+          kecamatan: row.getCell(17).result,
+          kabupaten: row.getCell(18).result,
+          propinsi: row.getCell(19).result,
+          namaAyah: row.getCell(20).result,
+          namaIbu: row.getCell(21).result,
+          nikAyah: row.getCell(22).result,
+          nikIbu: row.getCell(23).result,
+          peran: row.getCell(24).result,
+          bap: row.getCell(25).result,
+          passport: row.getCell(26).result,
+          pendanaan: row.getCell(27).result,
+          informasiTeknis: row.getCell(28).result,
+          lapangan: row.getCell(29).result,
         });
       }
     });
