@@ -26,7 +26,7 @@ $sheet = $spreadsheet->setActiveSheetIndex(0);
 $datas = new Worksheet($spreadsheet, 'Opsi');
 
 /* header */
-$sheet->setCodeName("Data");
+$sheet->setTitle('Data');
 foreach ($columns as $key => $value) {
     $sheet->getCellByColumnAndRow($key + 1, 1)->setValue($value["header"]);
     $sheet->getColumnDimensionByColumn($key + 1)->setWidth($value["width"]);
