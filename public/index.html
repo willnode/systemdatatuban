@@ -122,7 +122,10 @@
 
   <script>
     let mainChart, miniCharts = [];
-    fetch('/api/matriks/summary').then(x => x.json()).then(data => refresh(data))
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+      recalculate('1-month');
+    });
 
     function recalculate(mode) {
       var startdate = new Date();
