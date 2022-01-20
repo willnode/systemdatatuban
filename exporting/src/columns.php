@@ -18,13 +18,13 @@ $columns = [
     ],
     [
         "header" => "Skala/Status",
-        "key" => "skalaStatus",
+        "key" => "skala_Status",
         "width" => 20,
     ],
     [
         "header" => "Nama Alias",
         "width" => 20,
-        "key" => "namaAlias",
+        "key" => "nama_alias",
     ],
     [
         "header" => "Nama Lengkap",
@@ -34,37 +34,37 @@ $columns = [
     [
         "header" => "No Handphone",
         "width" => 20,
-        "key" => "noHandphone",
+        "key" => "no_handphone",
     ],
     [
         "header" => "Tempat Lahir",
         "width" => 20,
-        "key" => "tempatLahir",
+        "key" => "tempat_lahir",
     ],
     [
         "width" => 20,
         "header" => "Tanggal Lahir",
-        "key" => "tanggalLahir",
+        "key" => "tanggal_lahir",
     ],
     [
         "header" => "Jenis Kelamin",
         "width" => 20,
-        "key" => "jenisKelamin",
+        "key" => "jenis_kelamin",
     ],
     [
         "header" => "Jenis Pekerjaan",
         "width" => 20,
-        "key" => "jenisPekerjaan",
+        "key" => "jenis_pekerjaan",
     ],
     [
         "header" => "Status Kawin",
         "width" => 20,
-        "key" => "statusKawin",
+        "key" => "status_kawin",
     ],
     [
         "header" => "Pendidikan Terakhir",
         "width" => 20,
-        "key" => "pendidikanTerakhir",
+        "key" => "pendidikan_terakhir",
     ],
     [
         "header" => "Alamat",
@@ -74,7 +74,7 @@ $columns = [
     [
         "header" => "RT/RW",
         "width" => 20,
-        "key" => "rtRw",
+        "key" => "rt_rw",
     ],
     [
         "header" => "Kelurahan",
@@ -99,22 +99,22 @@ $columns = [
     [
         "header" => "Nama Ayah",
         "width" => 20,
-        "key" => "namaAyah",
+        "key" => "nama_ayah",
     ],
     [
         "header" => "Nama Ibu",
         "width" => 20,
-        "key" => "namaIbu",
+        "key" => "nama_ibu",
     ],
     [
         "header" => "NIK Ayah",
         "width" => 20,
-        "key" => "nikAyah",
+        "key" => "nik_ayah",
     ],
     [
         "header" => "NIK Ibu",
         "width" => 20,
-        "key" => "nikIbu",
+        "key" => "nik_ibu",
     ],
     [
         "header" => "Peran",
@@ -139,7 +139,7 @@ $columns = [
     [
         "header" => "Informasi Teknis",
         "width" => 30,
-        "key" => "informasiTeknis",
+        "key" => "informasi_teknis",
     ],
     [
         "header" => "Lapangan",

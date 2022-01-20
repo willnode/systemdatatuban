@@ -62,10 +62,10 @@
         <div
           class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Jumlah Kelompok Baru: <span id="jml"></span></h1>
-          <!--div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-toolbar mb-2 mb-md-0">
             <div class="dropdown show">
               <button type="button" id="dropdownMenuButton" class="btn btn-sm btn-outline-secondary dropdown-toggle"
-                data-bs-toggle="dropdown">
+                data-bs-toggle="dropdown" style="width: 150px;">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                   class="feather feather-calendar" aria-hidden="true">
@@ -74,16 +74,18 @@
                   <line x1="8" y1="2" x2="8" y2="6"></line>
                   <line x1="3" y1="10" x2="21" y2="10"></line>
                 </svg>
-                1 Bulan
+                <span id="dropname">1 Bulan</span>
               </button>
               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">1 Bulan</a>
-                <a class="dropdown-item" href="#">6 Bulan</a>
-                <a class="dropdown-item" href="#">1 Tahun</a>
-                <a class="dropdown-item" href="#">5 Tahun</a>
+                <a class="dropdown-item active dropmenu" id="1-month" href="javascript:recalculate('1-month')">
+                  1 Bulan
+                </a>
+                <a class="dropdown-item dropmenu" id="6-month" href="javascript:recalculate('6-month')">6 Bulan</a>
+                <a class="dropdown-item dropmenu" id="1-year" href="javascript:recalculate('1-year')">1 Tahun</a>
+                <a class="dropdown-item dropmenu" id="5-year" href="javascript:recalculate('5-year')">5 Tahun</a>
               </div>
             </div>
-          </div-->
+          </div>
         </div>
       </main>
       <div class="col-12">
@@ -122,6 +124,32 @@
     let mainChart, miniCharts = [];
     fetch('/api/matriks/summary').then(x => x.json()).then(data => refresh(data))
 
+    function recalculate(mode) {
+      var startdate = new Date();
+      switch (mode) {
+        case '1-month':
+          startdate = new Date(startdate.getFullYear(), startdate.getMonth() - 1, 1);
+          break;
+        case '6-month':
+          startdate = new Date(startdate.getFullYear(), startdate.getMonth() - 6, 1);
+          break;
+        case '1-year':
+          startdate = new Date(startdate.getFullYear() - 1, startdate.getMonth(), 1);
+          break;
+        case '5-year':
+          startdate = new Date(startdate.getFullYear() - 5, startdate.getMonth(), 1);
+          break;
+      }
+      fetch('/api/matriks/summary?startDate=' + encodeURIComponent(startdate.toISOString())).then(x => x.json()).then((
+        data) => {
+        refresh(data);
+        document.getElementById(mode).classList.add('active');
+        document.getElementById('dropname').innerText = document.getElementById(mode).innerText.trim();
+      });
+      document.querySelectorAll('.dropmenu').forEach(x => x.classList.remove('active'));
+      document.getElementById('dropname').innerText = 'Loading...';
+    }
+
     function genColor(seed) {
       const h = 360 * Math.abs(Math.sin(seed * 1));
       return {
@@ -154,9 +182,9 @@
           maintainAspectRatio: false,
           scales: {
             yAxes: [{
-                ticks: {
-                    precision: 0,
-                }
+              ticks: {
+                precision: 0,
+              }
             }]
           }
         }
