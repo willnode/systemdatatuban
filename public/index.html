@@ -80,7 +80,7 @@
                 <a class="dropdown-item active dropmenu" id="1-month" href="javascript:recalculate('1-month')">
                   1 Bulan
                 </a>
-                <a class="dropdown-item dropmenu" id="6-month" href="javascript:recalculate('6-month')">6 Bulan</a>
+                <a class="dropdown-item dropmenu" id="4-month" href="javascript:recalculate('4-month')">4 Bulan</a>
                 <a class="dropdown-item dropmenu" id="1-year" href="javascript:recalculate('1-year')">1 Tahun</a>
                 <a class="dropdown-item dropmenu" id="5-year" href="javascript:recalculate('5-year')">5 Tahun</a>
               </div>
@@ -133,8 +133,8 @@
         case '1-month':
           startdate = new Date(startdate.getFullYear(), startdate.getMonth() - 1, 1);
           break;
-        case '6-month':
-          startdate = new Date(startdate.getFullYear(), startdate.getMonth() - 6, 1);
+        case '4-month':
+          startdate = new Date(startdate.getFullYear(), startdate.getMonth() - 4, 1);
           break;
         case '1-year':
           startdate = new Date(startdate.getFullYear() - 1, startdate.getMonth(), 1);

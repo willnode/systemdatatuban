@@ -418,7 +418,22 @@ module.exports = {
         var k = x.toISOString().slice(0, 10);
         daysKey[k] = data[k] || 0;
       });
-      return daysKey;
+      var daysKeyCount = days.length;
+      if (daysKeyCount < 60) return daysKey; // 2 bulan
+      // aggregate
+      var daysKeyAgg = {};
+      var daysKeyAggStep = Math.ceil(daysKeyCount / 30);
+      for (var i = 0; i < daysKeyCount; i += daysKeyAggStep) {
+        var maxi = Math.min(i + daysKeyAggStep - 1, daysKeyCount - 1);
+        var startdate = days[i].toISOString().slice(0, 10);
+        var enddate = days[maxi].toISOString().slice(0, 10);
+        var datek = `${startdate} s/d ${enddate}`;
+        daysKeyAgg[datek] = 0;
+        for (let j = i; j <= maxi; j++) {
+          daysKeyAgg[datek] += daysKey[days[j].toISOString().slice(0, 10)] || 0;
+        }
+      }
+      return daysKeyAgg;
     }
     const summary = {
       total: data.length,
