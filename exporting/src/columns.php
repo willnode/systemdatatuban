@@ -18,7 +18,7 @@ $columns = [
     ],
     [
         "header" => "Skala/Status",
-        "key" => "skala_Status",
+        "key" => "skala_status",
         "width" => 20,
     ],
     [
