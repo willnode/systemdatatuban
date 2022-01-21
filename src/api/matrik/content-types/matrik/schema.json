@@ -217,6 +217,9 @@
     "bap": {
       "type": "richtext"
     },
+    "interogasi": {
+      "type": "richtext"
+    },
     "passport": {
       "type": "richtext"
     },
@@ -247,9 +250,7 @@
     },
     "mediaSosialDokumentasi": {
       "allowedTypes": [
-        "images",
-        "files",
-        "videos"
+        "images"
       ],
       "type": "media",
       "multiple": true
@@ -262,9 +263,7 @@
     },
     "lapanganDokumentasi": {
       "allowedTypes": [
-        "images",
-        "files",
-        "videos"
+        "images"
       ],
       "type": "media",
       "multiple": true

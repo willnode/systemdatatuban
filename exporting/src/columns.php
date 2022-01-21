@@ -1,5 +1,7 @@
 <?php
 
+require_once "db.php";
+
 $columns = [
     [
         "header" => "ID KASUS",
@@ -13,17 +15,17 @@ $columns = [
     ],
     [
         "header" => "Kelompok",
-        "width" => 20,
+        "width" => 15,
         "key" => "kelompok", // 3
     ],
     [
         "header" => "Skala/Status",
-        "width" => 20,
+        "width" => 15,
         "key" => "skala_status", // 4
     ],
     [
         "header" => "Nama Alias",
-        "width" => 20,
+        "width" => 15,
         "key" => "nama_alias", // 5
     ],
     [
@@ -33,122 +35,202 @@ $columns = [
     ],
     [
         "header" => "No Handphone",
-        "width" => 20,
+        "width" => 15,
         "key" => "no_handphone", // 7
     ],
     [
-        "header" => "Tempat Lahir",
+        "header" => "No KK",
         "width" => 20,
-        "key" => "tempat_lahir", // 8
+        "key" => "no_kartu_keluarga", // 8
     ],
     [
-        "width" => 20,
+        "header" => "Tempat Lahir",
+        "width" => 15,
+        "key" => "tempat_lahir", // 9
+    ],
+    [
         "header" => "Tanggal Lahir",
-        "key" => "tanggal_lahir", // 9
+        "width" => 15,
+        "key" => "tanggal_lahir", // 10
     ],
     [
         "header" => "Jenis Kelamin",
-        "width" => 20,
-        "key" => "jenis_kelamin", // 10
+        "width" => 15,
+        "key" => "jenis_kelamin", // 11
     ],
     [
         "header" => "Jenis Pekerjaan",
         "width" => 20,
-        "key" => "jenis_pekerjaan", // 11
+        "key" => "jenis_pekerjaan", // 12
     ],
     [
         "header" => "Status Kawin",
         "width" => 20,
-        "key" => "status_kawin", // 12
+        "key" => "status_kawin", // 13
     ],
     [
         "header" => "Pendidikan Terakhir",
         "width" => 20,
-        "key" => "pendidikan_terakhir", // 13
+        "key" => "pendidikan_terakhir", // 14
     ],
     [
         "header" => "Alamat",
         "width" => 20,
-        "key" => "alamat", // 14
+        "key" => "alamat", // 15
     ],
     [
         "header" => "RT/RW",
-        "width" => 20,
-        "key" => "rt_rw", // 15
+        "width" => 15,
+        "key" => "rt_rw", // 16
     ],
     [
         "header" => "Kelurahan",
-        "width" => 20,
-        "key" => "kelurahan", // 16
+        "width" => 15,
+        "key" => "kelurahan", // 17
     ],
     [
         "header" => "Kecamatan",
-        "width" => 20,
-        "key" => "kecamatan", // 17
+        "width" => 15,
+        "key" => "kecamatan", // 18
     ],
     [
         "header" => "Kabupaten",
-        "width" => 20,
-        "key" => "kabupaten", // 18
+        "width" => 15,
+        "key" => "kabupaten", // 19
     ],
     [
         "header" => "Propinsi",
-        "width" => 20,
-        "key" => "propinsi", // 19
+        "width" => 15,
+        "key" => "propinsi", // 20
     ],
     [
         "header" => "Nama Ayah",
         "width" => 20,
-        "key" => "nama_ayah", // 20
+        "key" => "nama_ayah", // 21
     ],
     [
         "header" => "Nama Ibu",
         "width" => 20,
-        "key" => "nama_ibu", // 21
+        "key" => "nama_ibu", // 22
     ],
     [
         "header" => "NIK Ayah",
         "width" => 20,
-        "key" => "nik_ayah", // 22
+        "key" => "nik_ayah", // 23
     ],
     [
         "header" => "NIK Ibu",
         "width" => 20,
-        "key" => "nik_ibu", // 23
+        "key" => "nik_ibu", // 24
+    ],
+    [
+        "header" => "Keluarga",
+        "width" => 50,
+        "key" => "keluarga", // 25
     ],
     [
         "header" => "Peran",
-        "width" => 30,
-        "key" => "peran", // 24
+        "width" => 50,
+        "key" => "peran", // 26
     ],
     [
         "header" => "BAP",
-        "width" => 30,
-        "key" => "bap", // 25
+        "width" => 50,
+        "key" => "bap", // 27
+    ],
+    [
+        "header" => "Interogasi",
+        "width" => 50,
+        "key" => "interogasi", // 28
     ],
     [
         "header" => "Passport",
-        "width" => 30,
-        "key" => "passport", // 26
-    ],
-    [
-        "header" => "Pendanaan",
-        "width" => 30,
-        "key" => "pendanaan", // 27
+        "width" => 50,
+        "key" => "passport", // 29
     ],
     [
         "header" => "Informasi Teknis",
-        "width" => 30,
-        "key" => "informasi_teknis", // 28
+        "width" => 50,
+        "key" => "informasi_teknis", // 30
+    ],
+    [
+        "header" => "Pendanaan",
+        "width" => 50,
+        "key" => "pendanaan", // 31
+    ],
+    [
+        "header" => "Pendanaan Keterangan",
+        "width" => 50,
+        "key" => "pendanaan_keterangan", // 32
     ],
     [
         "header" => "Lapangan",
-        "width" => 30,
-        "key" => "lapangan", // 29
-    ]
+        "width" => 50,
+        "key" => "lapangan", // 33
+    ],
+    [
+        "header" => "Lapangan Keterangan",
+        "width" => 50,
+        "key" => "lapangan_keterangan", // 34
+    ],
+    [
+        "header" => "Media Sosial",
+        "width" => 50,
+        "key" => "media_sosial", // 35
+    ],
+    [
+        "header" => "Media Sosial Keterangan",
+        "width" => 50,
+        "key" => "media_sosial_keterangan", // 36
+    ],
 ];
 
 $matriks = json_decode(file_get_contents(realpath(__DIR__ . '/../../src/api/matrik/content-types/matrik/schema.json')), true);
 $enumasies = ['jenisKelamin', 'jenisPekerjaan', 'statusKawin', 'pendidikanTerakhir'];
-$enumasiesIndex = [9, 10, 11, 12];
+$enumasiesIndex = [11, 12, 13, 14];
 $alphabet = range('A', 'Z');
+
+function build_cache_component($fieldName, $tableName)
+{
+    global $db;
+    $res = $db->run(
+        "SELECT matriks_components.entity_id, $tableName.*
+        FROM  $tableName, matriks_components
+        WHERE matriks_components.field = '$fieldName'
+        AND matriks_components.component_id =  $tableName.id
+        ORDER BY matriks_components.entity_id, matriks_components.`order`"
+    );
+    $cache = [];
+    foreach ($res as $row) {
+        if (empty($cache[$row['entity_id']]))
+            $cache[$row['entity_id']] = [];
+        $cache[$row['entity_id']][] = $row;
+    }
+    return $cache;
+}
+
+function write_value($q, $key, &$cache)
+{
+    switch ($key) {
+        case 'media_sosial_dokumentasi':
+        case 'lapangan_dokumentasi':
+        case 'pendanaan_dokumentasi':
+            return implode("\n", array_map(function ($item) {
+                return substr($item['url'], strlen('/uploads/'));
+            }, $q[$key] ?? []));
+        case 'keluarga':
+            if (empty($cache['keluarga']))
+                $cache['keluarga'] = build_cache_component('keluarga', 'components_itemized_anggota_keluargas');
+            return implode("\n", array_map(function ($item) {
+                return $item['nik'] . ';' . $item['nama'] . ';' . $item['nomor'];
+            }, $cache['keluarga'][$q['id']] ?? []));
+        case 'media_sosial':
+            if (empty($cache['media_sosial']))
+                $cache['media_sosial'] = build_cache_component('mediaSosial', 'components_itemized_item_sosmeds');
+            return implode("\n", array_map(function ($item) {
+                return $item['tipe'] . ';' . $item['value'];
+            }, $cache['media_sosial'][$q['id']] ?? []));
+        default:
+            return "" . ($q[$key] ?? '');
+    }
+}

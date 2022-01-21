@@ -22,6 +22,7 @@ const formatTglID = (tgl) => new Date(tgl).toLocaleString('id', {
 const fs = require('fs');
 const ExcelJS = require('exceljs');
 const Schema = require('../content-types/matrik/schema.json');
+const kontakTipeEnum = require('../../../components/itemized/item-sosmed.json').attributes.tipe.enum;
 const {
   exec,
   execSync
@@ -693,6 +694,34 @@ module.exports = {
     await workbook.xlsx.readFile(path);
     const worksheet1 = workbook.getWorksheet('Data');
     const newData = [];
+    function expandComponent(value, keys) {
+      value = (value || '').trim();
+      if (!value) return [];
+      var rows = value.split('\n');
+      var result = [];
+      for (var i = 0; i < rows.length; i++) {
+        var row = rows[i].split(';');
+        var obj = {};
+        for (var j = 0; j < Math.min(keys.length, row.length); j++) {
+          obj[keys[j]] = row[j].trim();
+        }
+        result.push(obj);
+      }
+      return result;
+    }
+    function matchEnumSensitivy(value, keys = []) {
+      if (keys.includes(value)) return value;
+      for (let i = 0; i < keys.length; i++) {
+        if (keys[i].toLowerCase() == value.toLowerCase()) return keys[i];
+      }
+      return null;
+    }
+    var mediaSosialKeys = ['tipe', 'value'];
+    var keluargaKeys = ['nik', 'nama', 'nomor'];
+    var jenisKelaminEnum = Schema.attributes.jenisKelamin.enum;
+    var jenisPekerjaanEnum = Schema.attributes.jenisPekerjaan.enum;
+    var statusKawinEnum = Schema.attributes.statusKawin.enum;
+    var pendidikanTerakhirEnum = Schema.attributes.pendidikanTerakhir.enum;
     worksheet1.eachRow((row, rowNumber) => {
       if (rowNumber > 1) {
         newData.push({
@@ -703,28 +732,38 @@ module.exports = {
           namaAlias: row.getCell(5).value?.toString(),
           nama: row.getCell(6).value?.toString(),
           noHandphone: row.getCell(7).value?.toString(),
-          tempatLahir: row.getCell(8).value?.toString(),
-          tanggalLahir: row.getCell(9).value?.toString(),
-          jenisKelamin: row.getCell(10).value?.toString(),
-          jenisPekerjaan: row.getCell(11).value?.toString(),
-          statusKawin: row.getCell(12).value?.toString(),
-          pendidikanTerakhir: row.getCell(13).value?.toString(),
-          alamat: row.getCell(14).value?.toString(),
-          rtRw: row.getCell(15).value?.toString(),
-          kelurahan: row.getCell(16).value?.toString(),
-          kecamatan: row.getCell(17).value?.toString(),
-          kabupaten: row.getCell(18).value?.toString(),
-          propinsi: row.getCell(19).value?.toString(),
-          namaAyah: row.getCell(20).value?.toString(),
-          namaIbu: row.getCell(21).value?.toString(),
-          nikAyah: row.getCell(22).value?.toString(),
-          nikIbu: row.getCell(23).value?.toString(),
-          peran: row.getCell(24).value?.toString(),
-          bap: row.getCell(25).value?.toString(),
-          passport: row.getCell(26).value?.toString(),
-          pendanaan: row.getCell(27).value?.toString(),
-          informasiTeknis: row.getCell(28).value?.toString(),
-          lapangan: row.getCell(29).value?.toString(),
+          noKartuKeluarga: row.getCell(8).value?.toString(),
+          tempatLahir: row.getCell(9).value?.toString(),
+          tanggalLahir: row.getCell(10).value?.toString(),
+          jenisKelamin: matchEnumSensitivy(row.getCell(11).value?.toString(), jenisKelaminEnum),
+          jenisPekerjaan:  matchEnumSensitivy(row.getCell(12).value?.toString(), jenisPekerjaanEnum),
+          statusKawin: matchEnumSensitivy(row.getCell(13).value?.toString(), statusKawinEnum),
+          pendidikanTerakhir: matchEnumSensitivy(row.getCell(14).value?.toString(), pendidikanTerakhirEnum),
+          alamat: row.getCell(15).value?.toString(),
+          rtRw: row.getCell(16).value?.toString(),
+          kelurahan: row.getCell(17).value?.toString(),
+          kecamatan: row.getCell(18).value?.toString(),
+          kabupaten: row.getCell(19).value?.toString(),
+          propinsi: row.getCell(20).value?.toString(),
+          namaAyah: row.getCell(21).value?.toString(),
+          namaIbu: row.getCell(22).value?.toString(),
+          nikAyah: row.getCell(23).value?.toString(),
+          nikIbu: row.getCell(24).value?.toString(),
+          keluarga: expandComponent(row.getCell(25).value?.toString(), keluargaKeys),
+          peran: row.getCell(26).value?.toString(),
+          bap: row.getCell(27).value?.toString(),
+          interogasi: row.getCell(28).value?.toString(),
+          passport: row.getCell(29).value?.toString(),
+          informasiTeknis: row.getCell(30).value?.toString(),
+          pendanaan: row.getCell(31).value?.toString(),
+          pendanaanKeterangan: row.getCell(32).value?.toString(),
+          lapangan: row.getCell(33).value?.toString(),
+          lapanganKeterangan: row.getCell(34).value?.toString(),
+          mediaSosial: expandComponent(row.getCell(35).value?.toString(), mediaSosialKeys).map(x => {
+            x.tipe = matchEnumSensitivy(x.tipe, kontakTipeEnum);
+            return x;
+          }),
+          mediaSosialKeterangan: row.getCell(36).value?.toString(),
         });
       }
     });
@@ -734,21 +773,22 @@ module.exports = {
     var created = 0,
       updated = 0;
     for (let i = 0; i < newData.length; i++) {
-      const newItem = newData[i];
-      const oldItem = oldData.find(q => q.id == newItem.id);
-      if (oldItem) {
-        await strapi.db.query('api::matrik.matrik').update({
-          where: {
-            id: oldItem.id
-          },
-          data: newItem
-        });
-        updated++;
-      } else {
-        await strapi.db.query('api::matrik.matrik').create({
-          data: newItem
-        });
-        created++;
+      try {
+        const newItem = newData[i];
+        const oldItem = oldData.find(q => q.id == newItem.id);
+        if (oldItem) {
+          await strapi.entityService.update('api::matrik.matrik', oldItem.id, {data: newItem});
+          updated++;
+        } else {
+          await strapi.entityService.create('api::matrik.matrik', {data: newItem});
+          created++;
+        }
+      } catch (error) {
+        return {
+          info: `Gagal memproses data di baris ${i + 1}`,
+          message: error.message,
+          data: newData[i]
+        };
       }
     }
     return `

@@ -12,8 +12,8 @@ require "vendor/autoload.php";
 $dotenv = Dotenv\Dotenv::createImmutable(realpath(__DIR__ . '/../'));
 $dotenv->load();
 
-require "src/db.php";
-require "src/columns.php";
+require_once "src/db.php";
+require_once "src/columns.php";
 
 if (php_sapi_name() !== 'cli') {
     echo 'Only support call from CLI';
@@ -34,12 +34,14 @@ foreach ($columns as $key => $value) {
 }
 /** @var Question $q */
 $ii = 1;
+$cache = [];
 foreach ($db->run("SELECT * FROM matriks") as $i => $q) {
     $ii++;
     foreach ($columns as $j => $col) {
         $cell = $sheet->getCellByColumnAndRow($j + 1, $ii);
-        $cell->setValueExplicit("" . ($q[$col['key']] ?? ''), DataType::TYPE_STRING);
+        $cell->setValueExplicit(write_value($q, $col['key'], $cache), DataType::TYPE_STRING);
         $cell->getStyle()->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_TEXT);
+        $cell->getStyle()->getAlignment()->setWrapText(true);
     }
 }
 
@@ -49,8 +51,8 @@ foreach ($enumasies as $i => $enum) {
         $datas->getcellByColumnAndRow($i + 1, $j + 2)->setValue($item);
     }
     $sheet->setDataValidation(
-        $datas->getcellByColumnAndRow($enumasiesIndex[$i] + 1, 1)->getCoordinate() . ':' .
-            $datas->getcellByColumnAndRow($enumasiesIndex[$i] + 1, $j + 2)->getCoordinate(),
+        $datas->getcellByColumnAndRow($enumasiesIndex[$i], 1)->getCoordinate() . ':' .
+            $datas->getcellByColumnAndRow($enumasiesIndex[$i], $j + 2)->getCoordinate(),
         (new DataValidation())
             ->setType(DataValidation::TYPE_LIST)
             ->setErrorStyle(DataValidation::STYLE_INFORMATION)
