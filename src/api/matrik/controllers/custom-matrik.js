@@ -115,6 +115,7 @@ module.exports = {
                   body: [
                     ['KELOMPOK', ':', data.kelompok || ''],
                     ['SKALA/STATUS', ':', data.skalaStatus || ''],
+                    ['PANTAUAN', ':', data.pantauan || ''],
                     ['NAMA', ':', data.nama || ''],
                     ['NIK', ':', data.nik || ''],
                     ['NO. KARTU KELUARGA', ':', data.noKartuKeluarga || ''],
