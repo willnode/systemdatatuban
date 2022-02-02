@@ -24,170 +24,175 @@ $columns = [
         "key" => "skala_status", // 4
     ],
     [
+        "header" => "Pantauan",
+        "width" => 15,
+        "key" => "pantauan", // 5
+    ],
+    [
         "header" => "Nama Alias",
         "width" => 15,
-        "key" => "nama_alias", // 5
+        "key" => "nama_alias", // 6
     ],
     [
         "header" => "Nama Lengkap",
         "width" => 20,
-        "key" => "nama", // 6
+        "key" => "nama", // 7
     ],
     [
         "header" => "No Handphone",
         "width" => 15,
-        "key" => "no_handphone", // 7
+        "key" => "no_handphone", // 8
     ],
     [
         "header" => "No KK",
         "width" => 20,
-        "key" => "no_kartu_keluarga", // 8
+        "key" => "no_kartu_keluarga", // 9
     ],
     [
         "header" => "Tempat Lahir",
         "width" => 15,
-        "key" => "tempat_lahir", // 9
+        "key" => "tempat_lahir", // 10
     ],
     [
         "header" => "Tanggal Lahir",
         "width" => 15,
-        "key" => "tanggal_lahir", // 10
+        "key" => "tanggal_lahir", // 11
     ],
     [
         "header" => "Jenis Kelamin",
         "width" => 15,
-        "key" => "jenis_kelamin", // 11
+        "key" => "jenis_kelamin", // 12
     ],
     [
         "header" => "Jenis Pekerjaan",
         "width" => 20,
-        "key" => "jenis_pekerjaan", // 12
+        "key" => "jenis_pekerjaan", // 13
     ],
     [
         "header" => "Status Kawin",
         "width" => 20,
-        "key" => "status_kawin", // 13
+        "key" => "status_kawin", // 14
     ],
     [
         "header" => "Pendidikan Terakhir",
         "width" => 20,
-        "key" => "pendidikan_terakhir", // 14
+        "key" => "pendidikan_terakhir", // 15
     ],
     [
         "header" => "Alamat",
         "width" => 20,
-        "key" => "alamat", // 15
+        "key" => "alamat", // 16
     ],
     [
         "header" => "RT/RW",
         "width" => 15,
-        "key" => "rt_rw", // 16
+        "key" => "rt_rw", // 17
     ],
     [
         "header" => "Kelurahan",
         "width" => 15,
-        "key" => "kelurahan", // 17
+        "key" => "kelurahan", // 18
     ],
     [
         "header" => "Kecamatan",
         "width" => 15,
-        "key" => "kecamatan", // 18
+        "key" => "kecamatan", // 19
     ],
     [
         "header" => "Kabupaten",
         "width" => 15,
-        "key" => "kabupaten", // 19
+        "key" => "kabupaten", // 20
     ],
     [
         "header" => "Propinsi",
         "width" => 15,
-        "key" => "propinsi", // 20
+        "key" => "propinsi", // 21
     ],
     [
         "header" => "Nama Ayah",
         "width" => 20,
-        "key" => "nama_ayah", // 21
+        "key" => "nama_ayah", // 22
     ],
     [
         "header" => "Nama Ibu",
         "width" => 20,
-        "key" => "nama_ibu", // 22
+        "key" => "nama_ibu", // 23
     ],
     [
         "header" => "NIK Ayah",
         "width" => 20,
-        "key" => "nik_ayah", // 23
+        "key" => "nik_ayah", // 24
     ],
     [
         "header" => "NIK Ibu",
         "width" => 20,
-        "key" => "nik_ibu", // 24
+        "key" => "nik_ibu", // 25
     ],
     [
         "header" => "Keluarga",
         "width" => 50,
-        "key" => "keluarga", // 25
+        "key" => "keluarga", // 26
     ],
     [
         "header" => "Peran",
         "width" => 50,
-        "key" => "peran", // 26
+        "key" => "peran", // 27
     ],
     [
         "header" => "BAP",
         "width" => 50,
-        "key" => "bap", // 27
+        "key" => "bap", // 28
     ],
     [
         "header" => "Interogasi",
         "width" => 50,
-        "key" => "interogasi", // 28
+        "key" => "interogasi", // 29
     ],
     [
         "header" => "Passport",
         "width" => 50,
-        "key" => "passport", // 29
+        "key" => "passport", // 30
     ],
     [
         "header" => "Informasi Teknis",
         "width" => 50,
-        "key" => "informasi_teknis", // 30
+        "key" => "informasi_teknis", // 31
     ],
     [
         "header" => "Pendanaan",
         "width" => 50,
-        "key" => "pendanaan", // 31
+        "key" => "pendanaan", // 32
     ],
     [
         "header" => "Pendanaan Keterangan",
         "width" => 50,
-        "key" => "pendanaan_keterangan", // 32
+        "key" => "pendanaan_keterangan", // 33
     ],
     [
         "header" => "Lapangan",
         "width" => 50,
-        "key" => "lapangan", // 33
+        "key" => "lapangan", // 34
     ],
     [
         "header" => "Lapangan Keterangan",
         "width" => 50,
-        "key" => "lapangan_keterangan", // 34
+        "key" => "lapangan_keterangan", // 35
     ],
     [
         "header" => "Media Sosial",
         "width" => 50,
-        "key" => "media_sosial", // 35
+        "key" => "media_sosial", // 36
     ],
     [
         "header" => "Media Sosial Keterangan",
         "width" => 50,
-        "key" => "media_sosial_keterangan", // 36
+        "key" => "media_sosial_keterangan", // 37
     ],
 ];
 
 $matriks = json_decode(file_get_contents(realpath(__DIR__ . '/../../src/api/matrik/content-types/matrik/schema.json')), true);
 $enumasies = ['jenisKelamin', 'jenisPekerjaan', 'statusKawin', 'pendidikanTerakhir'];
-$enumasiesIndex = [11, 12, 13, 14];
+$enumasiesIndex = [12, 13, 14, 15];
 $alphabet = range('A', 'Z');
 
 function build_cache_component($fieldName, $tableName)

@@ -18,6 +18,9 @@
     "skalaStatus": {
       "type": "string"
     },
+    "pantauan": {
+      "type": "string"
+    },
     "nama": {
       "type": "string"
     },
