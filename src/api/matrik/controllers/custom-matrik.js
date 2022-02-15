@@ -28,6 +28,7 @@ const {
   execSync
 } = require('child_process');
 const path = require('path');
+const md2pdf = require('../services/md2pdf');
 
 const enumasies = ['jenisKelamin', 'jenisPekerjaan', 'statusKawin', 'pendidikanTerakhir']
 
@@ -99,11 +100,11 @@ module.exports = {
                   margin: 5,
                   alignment: 'center'
                 }, {
-                  text: data.namaAlias,
+                  text: data.namaAlias || '',
                   margin: 5,
                   alignment: 'center'
                 }, {
-                  text: data.noHandphone,
+                  text: data.noHandphone || '',
                   margin: 5,
                   alignment: 'center'
                 }, ]
@@ -152,28 +153,28 @@ module.exports = {
                 text: "PERAN / KETERLIBATAN"
               }, {
                 colSpan: 3,
-                text: data.peran || ''
+                stack: md2pdf(data.peran || '')
               }, '', ''],
               [{
                 fillColor: 'green',
                 text: "BAP"
               }, {
                 colSpan: 3,
-                text: data.bap || ''
+                stack: md2pdf(data.bap || '')
               }, '', ''],
               [{
                 fillColor: 'green',
                 text: "INTEROGASI"
               }, {
                 colSpan: 3,
-                text: data.interogasi || ''
+                stack: md2pdf(data.interogasi || '')
               }, '', ''],
               [{
                 fillColor: 'green',
                 text: "PASSPORT"
               }, {
                 colSpan: 3,
-                text: data.passport || ''
+                stack: md2pdf(data.passport || '')
               }, '', ''],
               [{
                 fillColor: 'green',
@@ -181,7 +182,7 @@ module.exports = {
                 text: "PENDANAAN"
               }, {
                 colSpan: 3,
-                text: data.pendanaan || ''
+                stack: md2pdf(data.pendanaan || '')
               }, '', ''],
               ['', {
                 table: {
@@ -194,7 +195,7 @@ module.exports = {
                     [
                       [({
                         alignment: 'left',
-                        text: data.pendanaanKeterangan || ''
+                        stack: md2pdf(data.pendanaanKeterangan || '')
                       })]
                     ]
                   ]
@@ -222,7 +223,7 @@ module.exports = {
                 text: "IT"
               }, {
                 colSpan: 3,
-                text: data.passport || ''
+                stack: md2pdf(data.informasiTeknis || '')
               }, '', ''],
               [{
                 fillColor: 'green',
@@ -253,7 +254,7 @@ module.exports = {
                     [
                       [({
                         alignment: 'left',
-                        text: data.mediaSosialKeterangan || ''
+                        stack: md2pdf(data.mediaSosialKeterangan || '')
                       })]
                     ]
                   ]
@@ -282,7 +283,7 @@ module.exports = {
                 fillColor: 'green',
               }, {
                 colSpan: 3,
-                text: data.lapangan || ''
+                stack: md2pdf(data.lapangan || '')
               }, '', ''],
               ['', {
                 table: {
@@ -295,7 +296,7 @@ module.exports = {
                     [
                       [({
                         alignment: 'left',
-                        text: data.lapanganKeterangan || ''
+                        stack: md2pdf(data.lapanganKeterangan || '')
                       })]
                     ]
                   ]
